@@ -1,0 +1,10 @@
+{
+  "originUrl": "http://127.0.0.1:8099/glue/v2/api-docs",
+  "templatePath": "./config/pont",
+  "outDir": "./src/services",
+  "surrounding": "typeScript",
+  "mocks": {
+    "enable": false
+  },
+  "templateType": "fetch"
+}

@@ -1,0 +1,54 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+log/
+
+### VS Code ###
+.vscode/
+
+# dependencies
+node_modules/
+npm-debug.log*
+yarn-error.log
+yarn.lock
+package-lock.json
+
+# production
+/dist
+
+# misc
+.DS_Store
+
+# umi
+.umi
+.umi-production
+.umi-test
+.env.local
+# 本地配置
+*.local.ts
