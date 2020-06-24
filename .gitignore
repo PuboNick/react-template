@@ -52,3 +52,9 @@ package-lock.json
 .env.local
 # 本地配置
 *.local.ts
+.mocks/
+/src/services/mods/
+/src/services/api-lock.json
+/src/services/api.d.ts
+/src/services/baseClass.ts
+/src/services/index.ts

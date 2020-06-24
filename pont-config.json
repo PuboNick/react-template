@@ -1,10 +1,12 @@
 {
-  "originUrl": "http://127.0.0.1:8099/glue/v2/api-docs",
+  "originUrl": "http://127.0.0.1:8080/demo/v2/api-docs",
   "templatePath": "./config/pont",
   "outDir": "./src/services",
   "surrounding": "typeScript",
   "mocks": {
-    "enable": false
+    "enable": true,
+    "port": 8085,
+    "wrapper": "{response}"
   },
   "templateType": "fetch"
 }
