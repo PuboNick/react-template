@@ -53,6 +53,8 @@ package-lock.json
 # 本地配置
 *.local.ts
 .mocks/
+
+#使用時解除以下限制
 /src/services/mods/
 /src/services/api-lock.json
 /src/services/api.d.ts
