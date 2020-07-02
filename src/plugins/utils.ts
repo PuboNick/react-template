@@ -58,3 +58,29 @@ export const parseDatetime = (str: string): string => {
   if (!str) return '';
   return moment(new Date(str)).format(constans.DATE_TIME_FORMAT);
 };
+/**
+ * 判斷一個值是否爲對象
+ * @param obj 任意值
+ */
+export const isObj = (obj: any): boolean => {
+  return (typeof obj === 'object' || typeof obj === 'function') && obj !== null;
+};
+/**
+ * 複製一個普通對象
+ * @param obj 對象
+ */
+export const clone = (obj: any): any => {
+  let cloneObj;
+  let Constructor = obj.constructor;
+  if (Constructor === RegExp) {
+    cloneObj = new Constructor(obj);
+  } else if (Constructor === Date) {
+    cloneObj = new Constructor(obj.getTime());
+  } else {
+    cloneObj = new Constructor();
+  }
+  for (let key in obj) {
+    cloneObj[key] = isObj(obj[key]) ? clone(obj[key]) : obj[key];
+  }
+  return cloneObj;
+};
