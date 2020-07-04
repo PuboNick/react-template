@@ -4,11 +4,10 @@ const useDebunce = (callback: any, timmer: number) => {
   const [timeout, setTime]: any = useState(null);
   const run = (...args: any) => {
     if (timeout) clearTimeout(timeout);
-    setTime(
-      setTimeout(() => {
-        callback(...args);
-      }, timmer),
-    );
+    let time = setTimeout(() => {
+      callback(...args);
+    }, timmer);
+    setTime(time);
   };
   return {
     run,
