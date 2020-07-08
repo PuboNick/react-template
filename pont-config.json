@@ -1,10 +1,10 @@
 {
   "originUrl": "http://127.0.0.1:8080/demo/v2/api-docs",
   "templatePath": "./config/pont",
-  "outDir": "./src/services",
+  "outDir": "./src/apis",
   "surrounding": "typeScript",
   "mocks": {
-    "enable": true,
+    "enable": false,
     "port": 8085,
     "wrapper": "{response}"
   },

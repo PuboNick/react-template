@@ -17,7 +17,7 @@ export const random = (): string =>
 export const downloadFile = (uri: string, name: string) => {
   let a = document.createElement('a');
   a.href = uri;
-  a.download = name;
+  if (name) a.download = name;
   a.style.position = 'fixed';
   a.style.visibility = 'hidden';
   document.body.appendChild(a);

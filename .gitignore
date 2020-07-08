@@ -55,8 +55,8 @@ package-lock.json
 .mocks/
 
 #使用時解除以下限制
-/src/services/mods/
-/src/services/api-lock.json
-/src/services/api.d.ts
-/src/services/baseClass.ts
-/src/services/index.ts
+/src/apis/mods/
+/src/apis/api-lock.json
+/src/apis/api.d.ts
+/src/apis/baseClass.ts
+/src/apis/index.ts

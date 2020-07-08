@@ -1,7 +1,8 @@
-import axios, { AxiosResponse, AxiosError } from 'axios';
+import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
-import { PontCore } from '@/services/pontCore';
+import { PontCore } from '@/apis/pontCore';
 import constans from './constans';
+import { downloadFile } from './utils';
 
 /**
  * 全局HTTP返回
@@ -41,6 +42,7 @@ function log<T>(message: T): T {
  * @returns ErrorInfoStructure 全局HTTP返回
  */
 function onSuccess(response: AxiosResponse): any {
+  const types = ['blob', 'arraybuffer'];
   const res: any = response.data;
   const { code, msg = '', data, message = '' } = res;
   const success = code === '200' || code === 200;
@@ -49,6 +51,9 @@ function onSuccess(response: AxiosResponse): any {
   if (success) return { success, data, errorCode: '0', errorMessage };
   let config = { success, data, errorCode: code, errorMessage, url };
   if (code && !success) return log<ErrorInfoStructure>(config);
+  let isBlobFile = types.includes(response.config.responseType || '');
+  let autoDownload = response.config.params['_download'] === 'auto';
+  if (isBlobFile && autoDownload) toDownload(res, response.headers);
   return { success: true, data: res, errorCode: '0', errorMessage: '', url };
 }
 /**
@@ -68,6 +73,29 @@ function onError(err: AxiosError): ErrorInfoStructure {
   });
 }
 /**
+ * 請求攔截器 開發環境下載文件時自動添加參數
+ * @param config axios config
+ */
+const requestFilter = (config: AxiosRequestConfig) => {
+  let { responseType } = config;
+  if (responseType && constans.IS_DEV) {
+    config.params['_responseType'] = responseType;
+  }
+  return config;
+};
+/**
+ * 自動下載文件
+ * @param data Blob 文件
+ * @param headers 返回頭
+ * @description 需要在參數中添加 _download=auto
+ */
+const toDownload = (data: Blob, headers: any) => {
+  let url = URL.createObjectURL(data);
+  let fileName = headers['content-disposition']?.split('=')[1] || '';
+  downloadFile(url, decodeURI(fileName));
+  return { success: true };
+};
+/**
  * 初始化 Axios 配置
  */
 export function initAxios() {
@@ -77,6 +105,7 @@ export function initAxios() {
     axios.defaults.baseURL = constans.BASE_URL;
   }
   axios.interceptors.response.use(onSuccess, onError);
+  axios.interceptors.request.use(requestFilter);
   PontCore.useFetch((url, options = {}) => axios({ ...options, url }));
 }
 /**

@@ -42,7 +42,7 @@ export default defineConfig({
     // axios baseURI
     baseURI: `${baseURI}/`,
     // 開發環境 axios 默認地址
-    apiBase: `http://127.0.0.1:8086${baseURI}/`,
+    apiBase: `http://127.0.0.1:8099${baseURI}/`,
     // apiBase: `${baseURI}/`,
     // moment 日期格式
     dateFormat: 'YYYY/MM/DD',
