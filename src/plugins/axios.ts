@@ -52,8 +52,8 @@ function onSuccess(response: AxiosResponse): any {
   let config = { success, data, errorCode: code, errorMessage, url };
   if (code && !success) return log<ErrorInfoStructure>(config);
   let isBlobFile = types.includes(response.config.responseType || '');
-  let autoDownload = response.config.params['_download'] === 'auto';
-  if (isBlobFile && autoDownload) toDownload(res, response.headers);
+  let shouldAutoDownload = response.config.params['_download'] === 'auto';
+  if (isBlobFile && shouldAutoDownload) toDownload(res, response.headers);
   return { success: true, data: res, errorCode: '0', errorMessage: '', url };
 }
 /**
