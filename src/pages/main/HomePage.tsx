@@ -1,19 +1,14 @@
 import React, { FC } from 'react';
 import { IndexModelState, ConnectProps, Loading, connect } from 'umi';
-import { DatePicker } from 'antd';
 
 interface PageProps extends ConnectProps {
   index: IndexModelState;
   loading: boolean;
 }
 
-const IndexPage: FC<PageProps> = ({ index, dispatch }) => {
+const IndexPage: FC<PageProps> = ({ index }) => {
   const { name } = index;
-  return (
-    <div>
-      <DatePicker /> {name}
-    </div>
-  );
+  return <div>{name}</div>;
 };
 
 export default connect(

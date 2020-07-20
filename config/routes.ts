@@ -5,7 +5,7 @@ export default [
   { path: '/', exact: true, redirect: '/home' },
   {
     path: '/',
-    component: '@/pages/layouts/MainLayout',
-    routes: [{ path: '/home', component: '@/pages/main/HomePage' }],
+    component: '@/pages/layouts/mainLayout',
+    routes: [{ path: '/home', component: '@/pages/main/homePage' }],
   },
 ];
