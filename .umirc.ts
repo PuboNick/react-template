@@ -12,6 +12,7 @@ export default defineConfig({
   routes,
   title: '模板',
   mock: false,
+  ignoreMomentLocale: true,
   base: baseURI || '/',
   publicPath: `${baseURI}/`,
   copy: ['static'],

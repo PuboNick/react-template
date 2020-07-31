@@ -1,4 +1,4 @@
-let chunksTemp: string[] = ['axios', 'react-dom', 'moment', 'antd'];
+let chunksTemp: string[] = ['axios', 'react-dom', 'moment', 'antd', '@umijs'];
 
 export const chainWebpack = (config: any) => {
   let cacheGroups: any = {
