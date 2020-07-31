@@ -1,11 +1,14 @@
 import { defineConfig } from 'umi';
 
+import { chainWebpack, chunks } from './config/chainWebpack';
 import routes from './config/routes';
 
 // 項目根路徑
-const baseURI = process.env.NODE_ENV === 'development' ? '' : '/glue';
+const baseURI = process.env.NODE_ENV === 'development' ? '' : '';
 
 export default defineConfig({
+  chainWebpack,
+  chunks,
   routes,
   title: '模板',
   mock: false,
@@ -31,7 +34,7 @@ export default defineConfig({
     localsConvention: 'camelCase',
   },
   dynamicImport: {
-    loading: '@/pages/common/Loading.tsx',
+    loading: '@/pages/common/loading.tsx',
   },
   terserOptions: {
     compress: {
