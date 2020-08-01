@@ -106,7 +106,9 @@ export function initAxios() {
   }
   axios.interceptors.response.use(onSuccess, onError);
   axios.interceptors.request.use(requestFilter);
-  PontCore.useFetch((url, options = {}) => axios({ ...options, url }));
+  PontCore.useFetch((url, options = {}) =>
+    axios({ ...options, url, data: options.body }),
+  );
 }
 /**
  * 設置公共請求頭

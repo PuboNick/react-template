@@ -3,6 +3,7 @@ import { addLocale } from 'umi';
 
 import { initAxios } from '@/plugins/axios';
 import '@/assets/style.less';
+import { getMenuList, getFactoryList } from './services/user/userService';
 
 const option: any = {
   momentLocale: 'zh-tw',
@@ -13,5 +14,7 @@ initAxios();
 addLocale('zh-TW', {}, option);
 
 export async function getInitialState() {
-  return {};
+  let menuList = await getMenuList('C3005993');
+  let factoryList = await getFactoryList('C3005993');
+  return { menuList, factoryList };
 }

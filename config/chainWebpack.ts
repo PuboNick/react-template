@@ -1,3 +1,7 @@
+/**
+ * webpack 拆包
+ */
+
 let chunksTemp: string[] = ['axios', 'react-dom', 'moment', 'antd', '@umijs'];
 
 export const chainWebpack = (config: any) => {

@@ -12,4 +12,8 @@ export default {
   PORTRAIT_URI: portraitUri,
   // @ts-ignore 開發環境 Axios 地址
   API_BASE: apiBase,
+  // @ts-ignore 權限服務器地址
+  IAM_URI: iamUri,
+  // @ts-ignore 系統 ID
+  SYSTEM_ID: systemId,
 };

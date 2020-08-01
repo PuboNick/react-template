@@ -1,12 +1,12 @@
 {
-  "originUrl": "http://127.0.0.1:8080/demo/v2/api-docs",
+  "originUrl": "http://10.244.168.180/iam/v2/api-docs",
   "templatePath": "./config/pont",
-  "outDir": "./src/apis",
   "surrounding": "typeScript",
   "mocks": {
     "enable": false,
     "port": 8085,
     "wrapper": "{response}"
   },
-  "templateType": "fetch"
+  "templateType": "fetch",
+  "outDir": "./src/apis"
 }

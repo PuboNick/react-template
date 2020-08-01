@@ -2,6 +2,7 @@ import { defineConfig } from 'umi';
 
 import { chainWebpack, chunks } from './config/chainWebpack';
 import routes from './config/routes';
+import getDefine from './config/define';
 
 // 項目根路徑
 const baseURI = process.env.NODE_ENV === 'development' ? '' : '';
@@ -42,19 +43,5 @@ export default defineConfig({
       drop_console: true,
     },
   },
-  define: {
-    // axios baseURI
-    baseURI: `${baseURI}/`,
-    // 開發環境 axios 默認地址
-    apiBase: `http://127.0.0.1:8099${baseURI}/`,
-    // apiBase: `${baseURI}/`,
-    // moment 日期格式
-    dateFormat: 'YYYY/MM/DD',
-    // moment 時間格式
-    timeFormat: 'HH:mm:ss',
-    // moment 日期時間格式
-    datetimeFormat: 'YYYY/MM/DD HH:mm:ss',
-    // 頭像地址
-    portraitUri: 'http://10.244.168.180/humattend/emp/queryPhotoByEmpNo?empNo=',
-  },
+  define: getDefine(baseURI),
 });
