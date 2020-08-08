@@ -37,6 +37,36 @@ function log<T>(message: T): T {
   return message;
 }
 /**
+ * json 轉換
+ * @param response
+ */
+function jsonParser(str: any) {
+  let result = { error: '', jsonData: null };
+  try {
+    result.jsonData = JSON.parse(str);
+  } catch (e) {
+    result.error = 'JSON解析失敗!';
+    result.jsonData = str;
+  }
+  return result;
+}
+/**
+ * 處理返回值
+ * @param response
+ */
+function handleResponse(res: any, url: string): any {
+  const { code, msg = '', data, message = '' } = res;
+  const success = code === '200' || code === 200;
+  let errorMessage = msg || message || '';
+  if (success) return { success, data, errorCode: '0', errorMessage };
+  let config = { success, data, errorCode: code, errorMessage, url };
+  if (code && !success) return log<ErrorInfoStructure>(config);
+  let { error, jsonData }: any = jsonParser(res);
+  if (error)
+    return { success: true, data: res, errorCode: '0', errorMessage: '', url };
+  return handleResponse(jsonData, url);
+}
+/**
  * 獲取數據成功
  * @param response 返回內容
  * @returns ErrorInfoStructure 全局HTTP返回
@@ -44,17 +74,12 @@ function log<T>(message: T): T {
 function onSuccess(response: AxiosResponse): any {
   const types = ['blob', 'arraybuffer'];
   const res: any = response.data;
-  const { code, msg = '', data, message = '' } = res;
-  const success = code === '200' || code === 200;
-  let errorMessage = msg || message || '';
-  const url = response.config.url;
-  if (success) return { success, data, errorCode: '0', errorMessage };
-  let config = { success, data, errorCode: code, errorMessage, url };
-  if (code && !success) return log<ErrorInfoStructure>(config);
+  const url: any = response.config.url;
   let isBlobFile = types.includes(response.config.responseType || '');
-  let shouldAutoDownload = response.config.params['_download'] === 'auto';
+  let params = response.config.params || {};
+  let shouldAutoDownload = params['_download'] === 'auto';
   if (isBlobFile && shouldAutoDownload) toDownload(res, response.headers);
-  return { success: true, data: res, errorCode: '0', errorMessage: '', url };
+  return handleResponse(res, url);
 }
 /**
  * 獲取數據失敗處理
