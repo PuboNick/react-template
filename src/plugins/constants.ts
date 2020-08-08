@@ -7,7 +7,7 @@ export default {
   // @ts-ignore 時間格式
   TIME_FORMAT: timeFormat,
   // @ts-ignore 日期時間格式
-  DATE_TIME_FORMAT: datetimeFormat,
+  DATE_TIME_FORMAT: daytimeFormat,
   // @ts-ignore 頭像地址
   PORTRAIT_URI: portraitUri,
   // @ts-ignore 開發環境 Axios 地址

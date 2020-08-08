@@ -1,7 +1,7 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
 import { PontCore } from '@/apis/pontCore';
-import constans from './constans';
+import constants from './constants';
 import { downloadFile } from './utils';
 
 /**
@@ -72,7 +72,7 @@ function handleResponse(res: any, url: string): any {
  * @returns ErrorInfoStructure 全局HTTP返回
  */
 function onSuccess(response: AxiosResponse): any {
-  const types = ['blob', 'arraybuffer'];
+  const types = ['blob'];
   const res: any = response.data;
   const url: any = response.config.url;
   let isBlobFile = types.includes(response.config.responseType || '');
@@ -103,7 +103,7 @@ function onError(err: AxiosError): ErrorInfoStructure {
  */
 const requestFilter = (config: AxiosRequestConfig) => {
   let { responseType } = config;
-  if (responseType && constans.IS_DEV) {
+  if (responseType && constants.IS_DEV) {
     config.params['_responseType'] = responseType;
   }
   return config;
@@ -124,10 +124,10 @@ const toDownload = (data: Blob, headers: any) => {
  * 初始化 Axios 配置
  */
 export function initAxios() {
-  if (constans.IS_DEV) {
-    axios.defaults.baseURL = constans.API_BASE || '/';
+  if (constants.IS_DEV) {
+    axios.defaults.baseURL = constants.API_BASE || '/';
   } else {
-    axios.defaults.baseURL = constans.BASE_URL;
+    axios.defaults.baseURL = constants.BASE_URL;
   }
   axios.interceptors.response.use(onSuccess, onError);
   axios.interceptors.request.use(requestFilter);
