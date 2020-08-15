@@ -15,7 +15,7 @@ export default function(baseURI: string) {
     // moment 時間格式
     timeFormat: 'HH:mm:ss',
     // moment 日期時間格式
-    datetimeFormat: 'YYYY/MM/DD HH:mm:ss',
+    daytimeFormat: 'YYYY/MM/DD HH:mm:ss',
     // 頭像地址
     portraitUri: 'http://10.244.168.180/humattend/emp/queryPhotoByEmpNo?empNo=',
     // 權限服務器地址

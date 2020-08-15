@@ -1,11 +1,11 @@
-import constans from './constans';
+import constants from './constants';
 
 let echarts: any = null;
 
 const loadEchartsScript = () => {
   return new Promise(resolve => {
     let scpirt = document.createElement('script');
-    scpirt.src = constans.BASE_URL + 'plugins/echarts.min.js';
+    scpirt.src = constants.BASE_URL + 'plugins/echarts.min.js';
     scpirt.onload = () => {
       let win: any = window;
       resolve(win.echarts);

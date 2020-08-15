@@ -3,7 +3,7 @@
  */
 
 import { PontCore } from '../../../pontCore';
-import constans from '@/plugins/constans';
+import constants from '@/plugins/constants';
 
 export class Params {}
 
@@ -14,7 +14,7 @@ export function request(
 ) {
   return PontCore.fetch(
     PontCore.getUrl(
-      constans.IAM_URI + '/Common/queryAuthorityOrganization',
+      constants.IAM_URI + '/Common/queryAuthorityOrganization',
       params,
       'POST',
     ),

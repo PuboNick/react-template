@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import constans from './constans';
+import constants from './constants';
 
 /**
  * @description 生成一個長度爲8的隨機數
@@ -48,7 +48,7 @@ export const getItemsFormObj = (obj: any, keys: string[]) => {
  */
 export const parseDate = (str: string): string => {
   if (!str) return '';
-  return moment(new Date(str)).format(constans.DATE_FORMAT);
+  return moment(new Date(str)).format(constants.DATE_FORMAT);
 };
 /**
  * 轉換日期
@@ -56,7 +56,7 @@ export const parseDate = (str: string): string => {
  */
 export const parseDatetime = (str: string): string => {
   if (!str) return '';
-  return moment(new Date(str)).format(constans.DATE_TIME_FORMAT);
+  return moment(new Date(str)).format(constants.DATE_TIME_FORMAT);
 };
 /**
  * 判斷一個值是否爲對象

@@ -1,4 +1,4 @@
-import constans from '@/plugins/constans';
+import constants from '@/plugins/constants';
 import {
   queryIsExistAuthority,
   queryAuthorityOrganization,
@@ -11,7 +11,7 @@ import { iam } from '@/apis/iam/baseClass';
  */
 export const getMenuList = async (userId: string): Promise<any[]> => {
   let body = new iam.authorityQueryDTO();
-  body.authorityData = constans.SYSTEM_ID;
+  body.authorityData = constants.SYSTEM_ID;
   body.userId = userId;
   let { data, success }: any = await queryIsExistAuthority.request(
     {},
@@ -31,7 +31,7 @@ export const getMenuList = async (userId: string): Promise<any[]> => {
  */
 export const getFactoryList = async (userId: string): Promise<any[]> => {
   let body = new iam.authorityQueryDTO();
-  body.authorityData = constans.SYSTEM_ID;
+  body.authorityData = constants.SYSTEM_ID;
   body.userId = userId;
   let { data, success }: any = await queryAuthorityOrganization.request(
     {},
