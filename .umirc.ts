@@ -20,6 +20,7 @@ export default defineConfig({
   request: {
     dataField: 'data',
   },
+  exportStatic: {},
   favicon: '/favicon.ico',
   locale: {
     antd: true,

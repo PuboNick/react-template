@@ -6,6 +6,6 @@ export default [
   {
     path: '/',
     component: '@/pages/layouts/mainLayout',
-    routes: [{ path: '/home', component: '@/pages/main/homePage' }],
+    routes: [{ path: '/home', component: '@/pages/main/home' }],
   },
 ];
