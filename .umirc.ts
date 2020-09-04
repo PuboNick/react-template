@@ -16,15 +16,19 @@ export default defineConfig({
   ignoreMomentLocale: true,
   base: baseURI || '/',
   publicPath: `${baseURI}/`,
+  hash: true,
   copy: ['static'],
   request: {
     dataField: 'data',
   },
-  exportStatic: {},
+  exportStatic: {
+    htmlSuffix: true,
+  },
   favicon: '/favicon.ico',
   locale: {
     antd: true,
     baseNavigator: false,
+    default: 'zh-TW',
   },
   antd: {},
   polyfill: {
