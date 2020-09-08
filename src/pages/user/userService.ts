@@ -52,10 +52,11 @@ export const getFactoryList = async (userId: string): Promise<any[]> => {
 const findAccessItemById = (menu: any[], pathName: string): any => {
   for (let item of menu) {
     if (item.relateurl === pathName) return { ...item };
-    if (item.childMenu.length > 0)
+    if (item.childMenu.length > 0) {
       return findAccessItemById(item.childMenu, pathName);
-    return { childSubFunction: [] };
+    }
   }
+  return { childSubFunction: [] };
 };
 /**動態規劃*/
 const menuTemp: any = {};
