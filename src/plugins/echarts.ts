@@ -1,17 +1,12 @@
 import constants from './constants';
+import { loadScript } from './utils';
 
 let echarts: any = null;
 
-const loadEchartsScript = () => {
-  return new Promise(resolve => {
-    let scpirt = document.createElement('script');
-    scpirt.src = constants.BASE_URL + 'plugins/echarts.min.js';
-    scpirt.onload = () => {
-      let win: any = window;
-      resolve(win.echarts);
-    };
-    document.body.appendChild(scpirt);
-  });
+const loadEchartsScript = async () => {
+  await loadScript(constants.BASE_URL + 'plugins/echarts.min.js');
+  let win: any = window;
+  return win.echarts;
 };
 
 export const getEcharts = async () => {

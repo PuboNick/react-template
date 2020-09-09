@@ -1,12 +1,9 @@
-import React, { FC } from 'react';
-import {
-  IndexModelState,
-  ConnectProps,
-  Loading,
-  connect,
-  UserAccessModelState,
-  useSelector,
-} from 'umi';
+import React, { FC, useRef, useEffect, useState } from 'react';
+import { IndexModelState, ConnectProps, Loading, connect } from 'umi';
+
+import PdfEmbed from '@/components/ui/data/PdfEmbed';
+import PdfPreview from '@/components/ui/data/PdfPreview';
+import { html2dataUrl } from '@/plugins/pdf';
 
 interface PageProps extends ConnectProps {
   index: IndexModelState;
@@ -14,12 +11,17 @@ interface PageProps extends ConnectProps {
 }
 
 const IndexPage: FC<PageProps> = ({ index }) => {
-  const { name } = index;
-  const { access }: UserAccessModelState = useSelector(
-    (state: any) => state.userAccess,
+  const ref: any = useRef();
+  const [url, setUrl] = useState(null);
+  useEffect(() => {
+    html2dataUrl(ref.current).then((dataUrl: any) => setUrl(dataUrl));
+  }, [index]);
+  return (
+    <div style={{ width: '100%', height: '100vh' }}>
+      <PdfPreview content={ref}>{index.name}hello</PdfPreview>
+      <PdfEmbed url={url} />
+    </div>
   );
-  console.log(access);
-  return <div>{name}</div>;
 };
 
 export default connect(

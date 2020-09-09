@@ -14,7 +14,7 @@ export const random = (): string =>
  * @param {string} uri 文件地址
  * @param {string} name 文件名
  */
-export const downloadFile = (uri: string, name: string) => {
+export const downloadFile = (uri: string, name: string): void => {
   let a = document.createElement('a');
   a.href = uri;
   if (name) a.download = name;
@@ -27,7 +27,7 @@ export const downloadFile = (uri: string, name: string) => {
 /**
  * @description 判斷時間是否在今天之前
  */
-export const isExpire = (str: string) => {
+export const isExpire = (str: string): boolean => {
   return moment(new Date(str)).isBefore(moment());
 };
 /**
@@ -35,7 +35,7 @@ export const isExpire = (str: string) => {
  * @param {Object} obj 原始對象
  * @param {Array} keys 鍵名列表
  */
-export const getItemsFormObj = (obj: any, keys: string[]) => {
+export const getItemsFormObj = (obj: any, keys: string[]): any => {
   let result: any = {};
   for (let key of keys) {
     if (obj[key] !== undefined) result[key] = obj[key];
@@ -54,7 +54,7 @@ export const parseDate = (str: string): string => {
  * 轉換日期
  * @param str 時間字符串
  */
-export const parseDatetime = (str: string): string => {
+export const parseDaytime = (str: string): string => {
   if (!str) return '';
   return moment(new Date(str)).format(constants.DATE_TIME_FORMAT);
 };
@@ -83,4 +83,15 @@ export const clone = (obj: any): any => {
     cloneObj[key] = isObj(obj[key]) ? clone(obj[key]) : obj[key];
   }
   return cloneObj;
+};
+/**
+ * 異步加載script
+ */
+export const loadScript = (url: string) => {
+  return new Promise(resolve => {
+    let script = document.createElement('script');
+    script.src = url;
+    script.onload = () => resolve();
+    document.body.appendChild(script);
+  });
 };
