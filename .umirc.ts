@@ -5,7 +5,7 @@ import routes from './config/routes';
 import getDefine from './config/define';
 
 // 項目根路徑
-const baseURI = process.env.NODE_ENV === 'development' ? '' : '';
+const baseURI = process.env.NODE_ENV === 'development' ? '' : '/pdf';
 
 export default defineConfig({
   chainWebpack,

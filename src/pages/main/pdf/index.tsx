@@ -2,13 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import icon from '@/assets/icons/cashFlow.png';
 import { getPdfJs, html2image } from '@/plugins/pdf';
-import { getItemsFormObj, downloadFile } from '@/plugins/utils';
+import { downloadFile } from '@/plugins/utils';
+import constants from '@/plugins/constants';
 
 export default function PdfPage() {
   const ref: any = useRef();
   const contentRef: any = useRef();
-  const url = '/document.pdf';
+  const url = constants.BASE_URL + 'document.pdf';
   const [position, setPosition] = useState({ x: 80, y: 80 });
+
+  const iconOffset = 40;
+  const offsetX = (window.document.body.clientWidth - 597) / 2 + iconOffset;
 
   const onPageRendered = () => {
     console.log('done');
@@ -39,9 +43,8 @@ export default function PdfPage() {
   };
 
   const onDragEnd = (e: any) => {
-    let res = getItemsFormObj(e, ['pageX', 'pageY']);
-    console.log(res);
-    setPosition({ x: e.pageX - 40, y: e.pageY - 40 });
+    let { pageX, pageY } = e;
+    setPosition({ x: pageX - offsetX, y: pageY - iconOffset - 45 });
   };
 
   const save = () => {
@@ -54,8 +57,21 @@ export default function PdfPage() {
     getPdfJs().then(onGetPdfJs);
   }, []);
   return (
-    <div>
-      <div style={{ width: '800px' }}>
+    <div
+      style={{
+        paddingTop: '45px',
+        width: '100%',
+        height: '100vh',
+        background: '#3f3f3f',
+      }}
+    >
+      <div
+        style={{
+          width: '597px',
+          margin: '0 auto',
+          background: '#fff',
+        }}
+      >
         <div ref={contentRef}>
           <div style={{ position: 'relative' }}>
             <div
@@ -72,7 +88,21 @@ export default function PdfPage() {
           </div>
         </div>
       </div>
-      <button onClick={() => save()}>保存</button>
+      <div
+        style={{
+          textAlign: 'right',
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100%',
+          background: '#4a4a4a',
+          padding: '5px 0',
+        }}
+      >
+        <button onClick={() => save()} style={{ marginRight: '20px' }}>
+          保存
+        </button>
+      </div>
     </div>
   );
 }

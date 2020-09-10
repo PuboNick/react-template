@@ -66,7 +66,7 @@ const menuTemp: any = {};
 export const getAccessById = (pathName: string) => {
   if (menuTemp[pathName]) return menuTemp[pathName];
   // @ts-ignore
-  let menu = window.AppMenuList;
+  let menu = window.AppMenuList || [];
   let results: any = {};
   let { childSubFunction = [] } = findAccessItemById(menu, pathName);
   childSubFunction.forEach((item: any) => {
