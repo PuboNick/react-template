@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import icon from '@/assets/icons/cashFlow.png';
 import { getPdfJs, html2image } from '@/plugins/pdf';
-import { downloadFile } from '@/plugins/utils';
+import { downloadFile } from '@/plugins/file';
 import constants from '@/plugins/constants';
 
 export default function PdfPage() {

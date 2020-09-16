@@ -2,7 +2,7 @@ import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
 import { PontCore } from '@/apis/pontCore';
 import constants from './constants';
-import { downloadFile } from './utils';
+import { downloadFile } from './file';
 
 /**
  * 全局HTTP返回

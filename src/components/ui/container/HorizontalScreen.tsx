@@ -3,29 +3,41 @@ import React, { useState, FC, useEffect } from 'react';
 interface HorizontalScreenProps {
   children: any;
   offsetHeight?: number;
+  containerStyle?: any;
 }
+
+const change2Height = () => {
+  let width = document.documentElement.clientWidth;
+  let height = document.documentElement.clientHeight;
+  let app: any = document.getElementById('root');
+  app.style.position = 'absolute';
+  app.style.width = height + 'px';
+  app.style.height = width + 'px';
+  app.style.top = (height - width) / 2 + 'px';
+  app.style.left = 0 - (height - width) / 2 + 'px';
+  app.style.transform = 'rotate(90deg)';
+  app.style.transformOrigin = '50% 50%';
+};
+
+const change2Width = () => {
+  let app: any = document.getElementById('root');
+  app.style.removeProperty('position');
+  app.style.removeProperty('width');
+  app.style.removeProperty('height');
+  app.style.removeProperty('top');
+  app.style.removeProperty('left');
+  app.style.removeProperty('transform');
+  app.style.removeProperty('transformOrigin');
+};
 
 const onSizeChange = () => {
   let width = document.documentElement.clientWidth;
   let height = document.documentElement.clientHeight;
-  let app: any = document.getElementById('root');
   if (width < height) {
-    app.style.position = 'absolute';
-    app.style.width = height + 'px';
-    app.style.height = width + 'px';
-    app.style.top = (height - width) / 2 + 'px';
-    app.style.left = 0 - (height - width) / 2 + 'px';
-    app.style.transform = 'rotate(90deg)';
-    app.style.transformOrigin = '50% 50%';
+    change2Height();
     return width;
   } else {
-    app.style.position = 'absolute';
-    app.style.width = width + 'px';
-    app.style.height = height + 'px';
-    app.style.top = '0px';
-    app.style.left = '0px';
-    app.style.transform = 'none';
-    app.style.transformOrigin = '50% 50%';
+    change2Width();
     return height;
   }
 };
@@ -33,6 +45,7 @@ const onSizeChange = () => {
 const HorizontalScreen: FC<HorizontalScreenProps> = ({
   children,
   offsetHeight = 0,
+  containerStyle = {},
 }) => {
   const [height, setHeight] = useState(onSizeChange());
 
@@ -44,12 +57,17 @@ const HorizontalScreen: FC<HorizontalScreenProps> = ({
     window.addEventListener('resize', setContainer);
     return () => {
       window.removeEventListener('resize', setContainer);
+      change2Width();
     };
   }, []);
   return (
     <div
-      className="market-box"
-      style={{ width: '100%', height: height - offsetHeight }}
+      style={{
+        width: '100%',
+        height: height - offsetHeight,
+        overflow: 'auto',
+        ...containerStyle,
+      }}
     >
       {children}
     </div>
