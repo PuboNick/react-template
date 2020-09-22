@@ -19,7 +19,7 @@ export default function(baseURI: string) {
     // 頭像地址
     portraitUri: 'http://10.244.168.180/humattend/emp/queryPhotoByEmpNo?empNo=',
     // 權限服務器地址
-    iamUri: 'http://10.244.168.180/iam/',
+    iamUri: 'http://10.244.168.180/iam',
     // 系統在權限系統中的資源 ID
     systemId: 'A981B2A4C85A421EE050F40A5BE7165A',
   };
