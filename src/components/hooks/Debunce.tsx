@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
-const useDebunce = (callback: any, timmer: number) => {
+const useDebounce = (callback: any, timer: number) => {
   const [timeout, setTime]: any = useState(null);
   const run = (...args: any) => {
     if (timeout) clearTimeout(timeout);
     let time = setTimeout(() => {
       callback(...args);
-    }, timmer);
+    }, timer);
     setTime(time);
   };
   return {
@@ -14,4 +14,4 @@ const useDebunce = (callback: any, timmer: number) => {
   };
 };
 
-export default useDebunce;
+export default useDebounce;
