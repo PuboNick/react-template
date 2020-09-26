@@ -3,12 +3,14 @@ import moment from 'moment';
 import constants from './constants';
 
 /**
- * @description 生成一個長度爲8的隨機數
+ * @description 生成一個長度爲8的隨機字符串
  */
-export const random = (): string =>
-  Math.random()
-    .toString(32)
-    .slice(2, 10);
+export const random = (): string => {
+  let arr = new Uint32Array(1);
+  let number = window.crypto.getRandomValues(arr)[0];
+  number = parseFloat('0.' + number.toString());
+  return number.toString(32).slice(2, 10);
+};
 /**
  * @description 判斷時間是否在今天之前
  */

@@ -4,6 +4,7 @@ import { addLocale } from 'umi';
 import { initAxios } from '@/plugins/axios';
 import '@/assets/style.less';
 import { getMenuList, getFactoryList } from './pages/user/userService';
+import { random } from './plugins/utils';
 
 const option: any = {
   momentLocale: 'zh-tw',
