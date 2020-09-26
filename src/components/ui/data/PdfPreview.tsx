@@ -29,6 +29,7 @@ const styles: any = {
   content: {
     width: '872px',
     fontSize: '14px',
-    fontFamily: 'sans-serif',
+    fontFamily: 'opposans-regular',
+    color: '#333',
   },
 };

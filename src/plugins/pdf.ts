@@ -13,7 +13,7 @@ export const html2pdfOption = {
   margin: 0.5,
   filename: 'download.pdf',
   image: { type: 'jpeg', quality: 0.98 },
-  html2canvas: { scale: 1.5 },
+  html2canvas: { scale: 2 },
   jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
   pagebreak: { mode: ['avoid-all'] },
 };
@@ -24,6 +24,7 @@ export const html2pdfOption = {
  */
 export const html2dataUrl = (target: any) => {
   return html2pdf()
+    .set(html2pdfOption)
     .from(target)
     .outputPdf('dataurlstring');
 };

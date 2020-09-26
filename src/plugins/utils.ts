@@ -74,9 +74,13 @@ export const clone = (obj: any): any => {
  */
 export const loadScript = (url: string) => {
   return new Promise(resolve => {
-    let script = document.createElement('script');
+    let script: any = document.getElementById(url);
+    if (!script) {
+      script = document.createElement('script');
+      script.id = url;
+      document.body.appendChild(script);
+    }
     script.src = url;
-    script.onload = () => resolve();
-    document.body.appendChild(script);
+    script.addEventListener('load', () => resolve());
   });
 };
