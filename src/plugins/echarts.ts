@@ -5,8 +5,7 @@ let echarts: any = null;
 
 const loadEchartsScript = async () => {
   await loadScript(constants.BASE_URL + 'plugins/echarts.min.js');
-  let win: any = window;
-  return win.echarts;
+  return (window as any).echarts;
 };
 
 export const getEcharts = async () => {

@@ -9,3 +9,5 @@ declare module '*.svg' {
   export default url;
 }
 declare module 'echarts';
+declare module 'enzyme';
+declare module 'enzyme-adapter-react-16';

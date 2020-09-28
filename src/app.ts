@@ -16,7 +16,6 @@ addLocale('zh-TW', {}, option);
 export async function getInitialState() {
   let menuList = await getMenuList('C3005993');
   let factoryList = await getFactoryList('C3005993');
-  //@ts-ignore
-  window.AppMenuList = menuList;
+  (window as any).AppMenuList = menuList;
   return { menuList, factoryList };
 }

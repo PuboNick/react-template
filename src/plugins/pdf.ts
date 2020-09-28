@@ -4,8 +4,6 @@ import { dataURItoBlob } from './file';
 import { loadScript } from './utils';
 import constants from './constants';
 
-const win: any = window;
-
 /**
  * html2pdf 配置
  */
@@ -51,7 +49,7 @@ export const getEmbedPdfUrl = (url: string) => {
   return URL.createObjectURL(blob);
 };
 
-let pdfjsLib = win.pdfjsLib || null;
+let pdfjsLib = (window as any).pdfjsLib || null;
 
 /**
  * 獲取pdfjs
@@ -59,5 +57,5 @@ let pdfjsLib = win.pdfjsLib || null;
 export const getPdfJs = async () => {
   if (pdfjsLib) return pdfjsLib;
   await loadScript(constants.BASE_URL + 'pdfjs/build/pdf.js');
-  return win.pdfjsLib;
+  return (window as any).pdfjsLib;
 };

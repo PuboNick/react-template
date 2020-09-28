@@ -6,7 +6,7 @@ let win: any = window;
 let UE = win.UE || null;
 
 export const getUe = async () => {
-  const ueServerUrl = 'http://10.244.233.14:8080/ueditor/jsp/controller.jsp';
+  const ueServerUrl = constants.UE_SERVICE_URL;
   if (UE) return UE;
   await loadScript(constants.BASE_URL + 'ueditor/ueditor.config.js');
   win.UEDITOR_CONFIG.serverUrl = ueServerUrl;

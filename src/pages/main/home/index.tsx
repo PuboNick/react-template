@@ -1,8 +1,8 @@
 import React, { FC, useRef, useEffect, useState } from 'react';
 import { IndexModelState, ConnectProps, Loading, connect } from 'umi';
 
-import PdfEmbed from '@/components/ui/data/PdfEmbed';
-import PdfPreview from '@/components/ui/data/PdfPreview';
+import PdfEmbed from '@/components/ui/data/pdf/embed/pdfEmbed';
+import PdfPreview from '@/components/ui/data/pdf/preview/pdfPreview';
 import { html2dataUrl } from '@/plugins/pdf';
 
 interface PageProps extends ConnectProps {

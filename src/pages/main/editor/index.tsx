@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Editor from '@/components/ui/form/Editor';
+import Editor from '@/components/ui/form/editor/uEditor';
 
 export default function EditorPage() {
   const [ue, setUe]: any = useState(null);

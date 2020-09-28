@@ -2,10 +2,7 @@ import { defineConfig } from 'umi';
 
 import { chainWebpack, chunks } from './config/chainWebpack';
 import routes from './config/routes';
-import getDefine from './config/define';
-
-// 項目根路徑
-const baseURI = process.env.NODE_ENV === 'development' ? '' : '/pdf';
+import { base } from './config/define';
 
 export default defineConfig({
   chainWebpack,
@@ -14,8 +11,8 @@ export default defineConfig({
   title: '模板',
   mock: false,
   ignoreMomentLocale: true,
-  base: baseURI || '/',
-  publicPath: `${baseURI}/`,
+  base: base || '/',
+  publicPath: `${base}/`,
   hash: true,
   copy: ['static'],
   request: {
@@ -48,5 +45,4 @@ export default defineConfig({
       drop_console: true,
     },
   },
-  define: getDefine(baseURI),
 });
