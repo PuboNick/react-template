@@ -44,10 +44,11 @@ export const getFactoryList = async (userId: string): Promise<any[]> => {
   let { userRelation } = menuList[0] || [];
   return userRelation;
 };
+
 /**
  * 递归查询节点
  * @param menu 菜单
- * @param id 资源路径
+ * @param pathName 资源路径
  */
 const findAccessItemById = (menu: any[], pathName: string): any => {
   for (let item of menu) {
@@ -58,8 +59,10 @@ const findAccessItemById = (menu: any[], pathName: string): any => {
   }
   return { childSubFunction: [] };
 };
-/**動態規劃*/
+
+// 動態規劃
 const menuTemp: any = {};
+
 /**
  * 獲取某個權限资源路径下的功能權限
  */

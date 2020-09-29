@@ -19,7 +19,7 @@ const IndexPage: FC<PageProps> = ({ index }) => {
   return (
     <div style={{ width: '100%', height: '100vh' }}>
       <PdfPreview content={ref}>
-        <div>test</div>
+        <div>{index.name}</div>
       </PdfPreview>
       <PdfEmbed url={url} />
     </div>
