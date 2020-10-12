@@ -1,6 +1,6 @@
 {
-  "templatePath": "./config/pont",
-  "transformPath": "./config/transform",
+  "templatePath": "./config/pont/template",
+  "transformPath": "./config/pont/transform",
   "surrounding": "typeScript",
   "mocks": {
     "enable": false,
