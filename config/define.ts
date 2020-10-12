@@ -29,7 +29,7 @@ export default {
   // 頭像地址
   PORTRAIT_URI: 'http://10.244.168.180/humattend/emp/queryPhotoByEmpNo?empNo=',
   // 系統在權限系統中的資源 ID
-  SYSTEM_ID: 'A981B2A4C85A421EE050F40A5BE7165A',
+  SYSTEM_ID: 'AE2804619ECB4A54E050F40A5BE75FB3',
   // ueditor 後台地址
   UE_SERVICE_URL: 'http://10.244.233.14:8080/ueditor/jsp/controller.jsp',
 };

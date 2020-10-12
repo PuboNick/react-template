@@ -1,8 +1,10 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
+import { UserAccessModelState } from 'umi';
 
-import { PontCore } from '@/apis/pontCore';
 import constants from './constants';
+import { PontCore } from '@/apis/pontCore';
 import { downloadFile } from './file';
+import { getState } from './dva';
 
 /**
  * 全局HTTP返回
@@ -62,8 +64,9 @@ function handleResponse(res: any, url: string): any {
   let config = { success, data, errorCode: code, errorMessage, url };
   if (code && !success) return log<ErrorInfoStructure>(config);
   let { error, jsonData }: any = jsonParser(res);
-  if (error)
+  if (error) {
     return { success: true, data: res, errorCode: '0', errorMessage: '', url };
+  }
   return handleResponse(jsonData, url);
 }
 /**
@@ -102,10 +105,25 @@ function onError(err: AxiosError): ErrorInfoStructure {
  * @param config axios config
  */
 const requestFilter = (config: AxiosRequestConfig) => {
+  if (!config.params) config.params = {};
+
+  // 自動添加廠區和部門參數
+  let { success, state } = getState<UserAccessModelState>('userAccess');
+  if (success) {
+    let { deptNo, factory } = state!;
+    config.params = { ...config.params, factory, dept: deptNo };
+  }
+
+  // 自動下載文件配置
+  if (config.params['_download'] === 'auto') {
+    config.responseType = 'blob';
+  }
   let { responseType } = config;
   if (responseType && constants.IS_DEV) {
     config.params['_responseType'] = responseType;
   }
+
+  // 自動切換接口地址
   let base: string = config.url?.split('/')[1] || '';
   let apis: any = constants.APIS;
   if (apis[base]) {

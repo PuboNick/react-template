@@ -14,7 +14,7 @@ export const getMenuList = async (userId: string): Promise<any[]> => {
   body.authorityData = constants.SYSTEM_ID;
   body.userId = userId;
   let { data, success }: any = await queryIsExistAuthority.request(
-    { test: '2020/08/09 16:08:07' },
+    {},
     body,
     {},
   );
