@@ -1,6 +1,6 @@
 {
-  "originUrl": "http://10.244.168.180/iam/v2/api-docs",
   "templatePath": "./config/pont",
+  "transformPath": "./config/transform",
   "surrounding": "typeScript",
   "mocks": {
     "enable": false,
@@ -8,5 +8,15 @@
     "wrapper": "{response}"
   },
   "templateType": "fetch",
-  "outDir": "./src/apis"
+  "outDir": "./src/apis",
+  "origins": [
+    {
+      "name": "iam",
+      "originUrl": "http://10.244.168.180/iam/v2/api-docs"
+    },
+    {
+      "name": "selfaudit",
+      "originUrl": "http://10.244.233.14:8080/selfaudit/v2/api-docs?group=SelfAudit%E7%A8%BD%E6%A0%B8%E7%B3%BB%E7%B5%B1"
+    }
+  ]
 }

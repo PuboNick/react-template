@@ -106,6 +106,11 @@ const requestFilter = (config: AxiosRequestConfig) => {
   if (responseType && constants.IS_DEV) {
     config.params['_responseType'] = responseType;
   }
+  let base: string = config.url?.split('/')[1] || '';
+  let apis: any = constants.APIS;
+  if (apis[base]) {
+    config.url = apis[base] + config.url;
+  }
   return config;
 };
 /**

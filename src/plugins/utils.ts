@@ -33,24 +33,27 @@ export const getItemsFormObj = (obj: any, keys: string[]): any => {
  * 轉換日期
  * @param str 時間字符串
  */
-export const parseDate = (str: string): string => {
+export const parseDate = (str: string, format?: string): string => {
   if (!str) return '';
-  return moment(new Date(str)).format(constants.DATE_FORMAT);
+  if (!format) format = constants.DATE_FORMAT;
+  return moment(new Date(str)).format(format);
 };
 /**
  * 轉換日期
  * @param str 時間字符串
  */
-export const parseDaytime = (str: string): string => {
+export const parseDaytime = (str: string, format?: string): string => {
   if (!str) return '';
-  return moment(new Date(str)).format(constants.DATE_TIME_FORMAT);
+  if (!format) format = constants.DATE_TIME_FORMAT;
+  return moment(new Date(str)).format(format);
 };
 /**
  * 判斷一個值是否爲對象
  * @param obj 任意值
  */
 export const isObj = (obj: any): boolean => {
-  return (typeof obj === 'object' || typeof obj === 'function') && obj !== null;
+  if (obj === null) return false;
+  return typeof obj === 'object' || typeof obj === 'function';
 };
 /**
  * 複製一個普通對象

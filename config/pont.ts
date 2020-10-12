@@ -49,7 +49,7 @@ export default class MyGenerator extends CodeGenerator {
      */
 
     import * as defs from '../../baseClass';
-    import { PontCore } from '../../pontCore';
+    import { PontCore } from '@/apis/pontCore';
 
     export ${paramsCode}
 

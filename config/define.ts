@@ -6,7 +6,15 @@
 // 項目根路徑
 export const base = '';
 
+// 接口服务器地址 对应 pont-config
+const APIS = {
+  // 權限服務器地址
+  iam: 'http://10.244.168.180',
+};
+
 export default {
+  // 接口地址
+  APIS,
   // 項目根路徑
   BASE_URL: `${base}/`,
   // 開發環境 axios 默認地址
@@ -20,8 +28,6 @@ export default {
   DATE_TIME_FORMAT: 'YYYY/MM/DD HH:mm:ss',
   // 頭像地址
   PORTRAIT_URI: 'http://10.244.168.180/humattend/emp/queryPhotoByEmpNo?empNo=',
-  // 權限服務器地址
-  IAM_URI: 'http://10.244.168.180/iam',
   // 系統在權限系統中的資源 ID
   SYSTEM_ID: 'A981B2A4C85A421EE050F40A5BE7165A',
   // ueditor 後台地址
