@@ -1,7 +1,8 @@
+import constants from '@/plugins/constants';
 import { Effect, Reducer, Subscription } from 'umi';
 
 export interface IndexModelState {
-  name: string;
+  pdfUrl: string;
 }
 
 export interface IndexModelType {
@@ -19,7 +20,7 @@ export interface IndexModelType {
 const IndexModel: IndexModelType = {
   namespace: 'index',
   state: {
-    name: 'hello world',
+    pdfUrl: constants.BASE_URL + 'documents/es6tutorial.pdf',
   },
   effects: {
     *query({ payload }, { call, put }) {},
