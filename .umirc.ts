@@ -2,8 +2,13 @@ import { defineConfig } from 'umi';
 
 import { chainWebpack, chunks } from './config/chainWebpack';
 import routes from './config/routes';
-import { base } from './config/define';
+import { base, copy } from './config/define';
 
+/**
+ * umijs 配置項
+ * 詳見: https://umijs.org/zh-CN/config
+ * Tip: Targets 配置最低兼容至 ie11 再往下將出現不可預知問題
+ */
 export default defineConfig({
   chainWebpack,
   chunks,
@@ -14,7 +19,7 @@ export default defineConfig({
   base: base || '/',
   publicPath: `${base}/`,
   hash: true,
-  copy: ['static'],
+  copy,
   request: {
     dataField: 'data',
   },
@@ -32,6 +37,7 @@ export default defineConfig({
     imports: ['core-js/stable'],
   },
   targets: {
+    ie: 11,
     chrome: 49,
   },
   cssLoader: {

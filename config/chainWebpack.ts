@@ -2,8 +2,10 @@
  * webpack 拆包
  */
 
+// 包名 常規配置只需增加或者刪除該數組元素即可
 let chunksTemp: string[] = ['axios', 'react-dom', 'moment', 'antd', '@umijs'];
 
+// webpack 配置方法
 export const chainWebpack = (config: any) => {
   let cacheGroups: any = {
     vendors: {

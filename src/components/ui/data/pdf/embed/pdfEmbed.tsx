@@ -2,6 +2,7 @@ import React, { FC, useRef, useEffect } from 'react';
 // @ts-ignore
 import PdfObject from 'pdfobject';
 import { getEmbedPdfUrl } from '@/plugins/pdf';
+import constants from '@/plugins/constants';
 
 interface PdfEmbedProps {
   url: string | null;
@@ -12,7 +13,7 @@ interface PdfEmbedProps {
  */
 const options = {
   forcePDFJS: true,
-  PDFJS_URL: '/pdfjs/web/viewer.html',
+  PDFJS_URL: constants.BASE_URL + 'pdfjs/web/viewer.html',
 };
 
 const PdfEmbed: FC<PdfEmbedProps> = ({ url }) => {

@@ -1,3 +1,6 @@
+/**
+ * pont 生成文件模板
+ */
 import {
   Interface,
   BaseClass,
