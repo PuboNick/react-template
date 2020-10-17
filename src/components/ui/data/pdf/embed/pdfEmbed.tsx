@@ -16,6 +16,10 @@ const options = {
   PDFJS_URL: constants.BASE_URL + 'pdfjs/web/viewer.html',
 };
 
+/**
+ * pdf 渲染
+ * @param url pdf 文件地址
+ */
 const PdfEmbed: FC<PdfEmbedProps> = ({ url }) => {
   const ref: any = useRef();
   useEffect(() => {

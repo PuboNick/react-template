@@ -42,6 +42,9 @@ const onSizeChange = () => {
   }
 };
 
+/**
+ * 自動橫屏顯示
+ */
 const HorizontalScreen: FC<HorizontalScreenProps> = ({
   children,
   offsetHeight = 0,
