@@ -71,3 +71,13 @@ export const obj2form = (data: any) => {
   }
   return results;
 };
+/**
+ * @description Blob 轉字符串
+ */
+export const blob2text = (blob: any) => {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = (e: any) => resolve(e.target.result);
+    reader.readAsText(blob);
+  });
+};

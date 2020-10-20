@@ -1,9 +1,10 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 import { UserAccessModelState } from 'umi';
+import qs from 'query-string';
 
 import constants from './constants';
 import { PontCore } from '@/apis/pontCore';
-import { downloadFile } from './file';
+import { blob2text, downloadFile } from './file';
 import { getState } from './dva';
 
 /**
@@ -70,19 +71,31 @@ function handleResponse(res: any, url: string): any {
   return handleResponse(jsonData, url);
 }
 /**
+ * 判斷是否添加了自動下載
+ * @param config axios配置
+ */
+function isAutoDownload(config: any) {
+  let query = qs.parseUrl(config.url).query;
+  let params = config.params || {};
+  params = { ...params, ...query };
+  return params['_download'] === 'auto';
+}
+/**
  * 獲取數據成功
  * @param response 返回內容
  * @returns ErrorInfoStructure 全局HTTP返回
  */
-function onSuccess(response: AxiosResponse): any {
-  const types = ['blob'];
-  const res: any = response.data;
+async function onSuccess(response: AxiosResponse) {
   const url: any = response.config.url;
+  const data = response.data;
+  const types = ['blob'];
   let isBlobFile = types.includes(response.config.responseType || '');
-  let params = response.config.params || {};
-  let shouldAutoDownload = params['_download'] === 'auto';
-  if (isBlobFile && shouldAutoDownload) toDownload(res, response.headers);
-  return handleResponse(res, url);
+  if (!isBlobFile) return handleResponse(data, url);
+  if (!isAutoDownload(response.config)) return handleResponse(data, url);
+  let text: any = await blob2text(response.data);
+  let result = handleResponse(text, url);
+  if (!result.success) return result;
+  return toDownload(data, response.headers);
 }
 /**
  * 獲取數據失敗處理
@@ -115,9 +128,11 @@ const requestFilter = (config: AxiosRequestConfig) => {
   }
 
   // 自動下載文件配置
-  if (config.params['_download'] === 'auto') {
+  if (isAutoDownload(config)) {
     config.responseType = 'blob';
   }
+
+  // 開發環境下自動添加下載類型參數（用於proxy代理工具）
   let { responseType } = config;
   if (responseType && constants.IS_DEV) {
     config.params['_responseType'] = responseType;
