@@ -7,12 +7,7 @@ interface PageProps extends ConnectProps {
 
 const IndexPage: FC<PageProps> = ({ index }) => {
   return (
-    <div
-      style={{
-        width: '100%',
-        height: '100vh',
-      }}
-    >
+    <div style={{ width: '100%', height: '100vh' }}>
       <PdfEmbed url={index.pdfUrl} />
     </div>
   );
