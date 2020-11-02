@@ -6,10 +6,12 @@ import { base, copy } from './config/define';
 
 /**
  * umijs 配置項
+ * @member {string} outputPath 文件輸出路徑(打包後的文件路徑)
  * 詳見: https://umijs.org/zh-CN/config
  * Tip: Targets 配置最低兼容至 ie11 再往下將出現不可預知問題
  */
 export default defineConfig({
+  outputPath: 'dist',
   chainWebpack,
   chunks,
   routes,

@@ -164,8 +164,6 @@ const toDownload = (data: Blob, headers: any) => {
 export function initAxios() {
   if (constants.IS_DEV) {
     axios.defaults.baseURL = constants.API_BASE || '/';
-  } else {
-    axios.defaults.baseURL = constants.BASE_URL;
   }
   axios.interceptors.response.use(onSuccess, onError);
   axios.interceptors.request.use(requestFilter);
