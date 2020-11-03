@@ -1,6 +1,5 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 import { UserAccessModelState } from 'umi';
-import qs from 'query-string';
 
 import constants from './constants';
 import { PontCore } from '@/apis/pontCore';
@@ -75,10 +74,7 @@ function handleResponse(res: any, url: string): any {
  * @param config axios配置
  */
 function isAutoDownload(config: any) {
-  let query = qs.parseUrl(config.url).query;
-  let params = config.params || {};
-  params = { ...params, ...query };
-  return params['_download'] === 'auto';
+  return config.download === 'auto';
 }
 /**
  * 獲取數據成功
@@ -94,6 +90,7 @@ async function onSuccess(response: AxiosResponse) {
   if (!isAutoDownload(response.config)) return handleResponse(data, url);
   let text: any = await blob2text(response.data);
   let result = handleResponse(text, url);
+  console.log(result);
   if (!result.success) return result;
   return toDownload(data, response.headers);
 }
@@ -150,7 +147,7 @@ const requestFilter = (config: AxiosRequestConfig) => {
  * 自動下載文件
  * @param data Blob 文件
  * @param headers 返回頭
- * @description 需要在參數中添加 _download=auto
+ * @description 需要在config中添加 download: 'auto'
  */
 const toDownload = (data: Blob, headers: any) => {
   let url = URL.createObjectURL(data);
