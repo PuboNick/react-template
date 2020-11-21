@@ -2,11 +2,10 @@ import base64 from './base64';
 
 /**
  * JS字符串加密和解密
- * @date:    2018年06月07日 上午10:03:41
- * @author   Senao
  * @param    {[string]} [str] [需要加密/解密的字符串（包括中文）]
  * @param    {[string]} [pwd] [密码]
  * @return   {[string]}
+ * @tip 同樣的字符串加密後的密文也不會相同
  */
 const encode = (str: any, pwd: string) => {
   str = base64.encode(str); //Base64加密
