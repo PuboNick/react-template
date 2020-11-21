@@ -74,7 +74,7 @@ function handleResponse(res: any, url: string): any {
  * @param config axios配置
  */
 function isAutoDownload(config: any) {
-  return config.download === 'auto';
+  return config?.download?.auto;
 }
 /**
  * 獲取數據成功
@@ -92,7 +92,7 @@ async function onSuccess(response: AxiosResponse) {
   let result = handleResponse(text, url);
   console.log(result);
   if (!result.success) return result;
-  return toDownload(data, response.headers);
+  return toDownload(data, response.headers, response.config);
 }
 /**
  * 獲取數據失敗處理
@@ -147,11 +147,15 @@ const requestFilter = (config: AxiosRequestConfig) => {
  * 自動下載文件
  * @param data Blob 文件
  * @param headers 返回頭
- * @description 需要在config中添加 download: 'auto'
+ * @description 需要在config中添加 download: { auto: true, fileName?: string }
+ * 當 fileName 為空時使用服務器提供的文件名
  */
-const toDownload = (data: Blob, headers: any) => {
+const toDownload = (data: Blob, headers: any, config: any) => {
   let url = URL.createObjectURL(data);
-  let fileName = headers['content-disposition']?.split('=')[1] || '';
+  let fileName = config?.download?.fileName;
+  if (!fileName) {
+    fileName = headers['content-disposition']?.split('=')[1] || '';
+  }
   downloadFile(url, decodeURI(fileName));
   return { success: true };
 };
