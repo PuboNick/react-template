@@ -1,8 +1,9 @@
 import { Reducer, Subscription } from 'umi';
-import { getAccessById } from './userService';
+import { getAccessByPathName } from './userService';
 
 export interface UserAccessModelState {
   access: any;
+  childMenu: any[];
   factory: string;
   deptNo: string;
   deptList: any;
@@ -22,6 +23,7 @@ const UserAccessModel: UserAccessModelType = {
   namespace: 'userAccess',
   state: {
     access: {},
+    childMenu: [],
     deptList: [],
     factory: '',
     deptNo: '',
@@ -31,8 +33,8 @@ const UserAccessModel: UserAccessModelType = {
       return { ...state, ...action.payload };
     },
     setAccess(state: any, action) {
-      let access = getAccessById(action.payload.pathname);
-      return { ...state, access };
+      let { access, childMenu } = getAccessByPathName(action.payload.pathname);
+      return { ...state, access, childMenu };
     },
   },
   subscriptions: {

@@ -50,11 +50,14 @@ export const getFactoryList = async (userId: string): Promise<any[]> => {
  * @param menu 菜单
  * @param pathName 资源路径
  */
-const findAccessItemById = (menu: any[], pathName: string): any => {
+export const findAccessItemByPathName = (
+  menu: any[],
+  pathName: string,
+): any => {
   for (let item of menu) {
     if (item.relateurl === pathName) return { ...item };
     if (item.childMenu.length > 0) {
-      return findAccessItemById(item.childMenu, pathName);
+      return findAccessItemByPathName(item.childMenu, pathName);
     }
   }
   return { childSubFunction: [] };
@@ -66,14 +69,18 @@ const menuTemp: any = {};
 /**
  * 獲取某個權限资源路径下的功能權限
  */
-export const getAccessById = (pathName: string) => {
+export const getAccessByPathName = (pathName: string) => {
   if (menuTemp[pathName]) return menuTemp[pathName];
   let menu = (window as any).AppMenuList || [];
-  let results: any = {};
-  let { childSubFunction = [] } = findAccessItemById(menu, pathName);
+  let access: any = {};
+  let { childSubFunction = [], childMenu = [] } = findAccessItemByPathName(
+    menu,
+    pathName,
+  );
   childSubFunction.forEach((item: any) => {
-    results[item.childCode] = true;
+    access[item.childCode] = true;
   });
+  let results = { access, childMenu };
   menuTemp[pathName] = results;
   return results;
 };
