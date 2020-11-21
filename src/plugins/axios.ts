@@ -113,6 +113,7 @@ function onError(err: AxiosError): ErrorInfoStructure {
 /**
  * 請求攔截器 開發環境下載文件時自動添加參數
  * @param config axios config
+ * @tip withoutToken 屬性為 true 時，會刪除全局添加的 access_token
  */
 const requestFilter = (config: AxiosRequestConfig) => {
   if (!config.params) config.params = {};
@@ -140,6 +141,11 @@ const requestFilter = (config: AxiosRequestConfig) => {
   let apis: any = constants.APIS;
   if (apis[base]) {
     config.url = apis[base] + config.url;
+  }
+
+  // 刪除ACCESS_TOKEN
+  if (config.headers.common.Authorization && (config as any).withoutToken) {
+    delete config.headers.common.Authorization;
   }
   return config;
 };
