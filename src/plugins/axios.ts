@@ -169,9 +169,7 @@ const toDownload = (data: Blob, headers: any, config: any) => {
  * 初始化 Axios 配置
  */
 export function initAxios() {
-  if (constants.IS_DEV) {
-    axios.defaults.baseURL = constants.API_BASE || '/';
-  }
+  axios.defaults.baseURL = constants.API_BASE || '/';
   axios.interceptors.response.use(onSuccess, onError);
   axios.interceptors.request.use(requestFilter);
   PontCore.useFetch((url, options = {}) =>

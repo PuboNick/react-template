@@ -98,15 +98,19 @@ export const loadScript = (url: string) => {
 export const setDebounce = (callback: any, time: number) => {
   let timeout: any = null;
   const cancel = () => {
-    if (timeout) clearTimeout(timeout);
+    if (!timeout) return;
+    clearTimeout(timeout);
+    timeout = null;
   };
   const func = (...args: any[]) => {
     if (typeof callback === 'function') {
       callback(...args);
+      cancel();
     }
   };
   const now = (...args: any[]) => {
     func(...args);
+    cancel();
   };
   const run = (...args: any[]) => {
     cancel();
@@ -114,7 +118,6 @@ export const setDebounce = (callback: any, time: number) => {
   };
   return { run, cancel, now };
 };
-
 /**
  * 設置循環執行
  * @returns 取消循序的方法

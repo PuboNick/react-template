@@ -28,7 +28,7 @@ export default {
   APIS,
   // 項目根路徑
   BASE_URL: `${base}/`,
-  // 開發環境 axios 默認地址, axios 生產環境默認地址為 BASE_URL
+  // axios 默認地址
   API_BASE: `http://127.0.0.1:8099${base}/`,
   // API_BASE: `${base}/`,
   // moment 日期格式
