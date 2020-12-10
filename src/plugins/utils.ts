@@ -89,3 +89,47 @@ export const loadScript = (url: string) => {
     script.addEventListener('load', () => resolve());
   });
 };
+/**
+ * 去抖方法
+ * @returns run 執行函數
+ * @returns cancel 取消函數
+ * @returns now 立刻執行函數
+ */
+export const setDebounce = (callback: any, time: number) => {
+  let timeout: any = null;
+  const cancel = () => {
+    if (timeout) clearTimeout(timeout);
+  };
+  const func = (...args: any[]) => {
+    if (typeof callback === 'function') {
+      callback(...args);
+    }
+  };
+  const now = (...args: any[]) => {
+    func(...args);
+  };
+  const run = (...args: any[]) => {
+    cancel();
+    timeout = setTimeout(() => func(...args), time);
+  };
+  return { run, cancel, now };
+};
+
+/**
+ * 設置循環執行
+ * @returns 取消循序的方法
+ */
+export const makeInterval = (
+  callback: any,
+  time: number,
+  shouldRunFirst?: boolean,
+) => {
+  const func = () => {
+    if (typeof callback === 'function') {
+      callback();
+    }
+  };
+  if (shouldRunFirst) func();
+  const interval = setInterval(func, time);
+  return () => clearInterval(interval);
+};

@@ -20,7 +20,7 @@ export interface IndexModelType {
 const IndexModel: IndexModelType = {
   namespace: 'index',
   state: {
-    pdfUrl: constants.BASE_URL + 'documents/es6tutorial.pdf',
+    pdfUrl: constants.BASE_URL + 'documents/JavaScript高級程序設計4版.pdf',
   },
   effects: {
     *query({ payload }, { call, put }) {},
