@@ -1,8 +1,9 @@
 import zhTW from 'antd/es/locale/zh_TW';
 import { addLocale } from 'umi';
 
-import { initAxios } from '@/plugins/axios';
+import { initAxios } from '@/plugins/request/axios';
 import '@/assets/style.less';
+import '@/plugins/request/filter';
 import { getMenuList, getFactoryList } from './pages/user/userService';
 
 const option: any = {

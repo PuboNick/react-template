@@ -1,10 +1,8 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
-import { UserAccessModelState } from 'umi';
 
-import constants from './constants';
+import constants from '../constants';
 import { PontCore } from '@/apis/pontCore';
-import { blob2text, downloadFile } from './file';
-import { getState } from './dva';
+import { blob2text, downloadFile } from '../utils/file';
 
 /**
  * 全局HTTP返回
@@ -73,7 +71,7 @@ function handleResponse(res: any, url: string): any {
  * 判斷是否添加了自動下載
  * @param config axios配置
  */
-function isAutoDownload(config: any) {
+export function isAutoDownload(config: any) {
   return config?.download?.auto;
 }
 /**
@@ -111,43 +109,30 @@ function onError(err: AxiosError): ErrorInfoStructure {
   });
 }
 /**
+ * 攔截器調用鏈
+ * @param config 請求配置
+ */
+const requestFilterLine: any = {
+  line: [],
+  filter: (callback: any) => requestFilterLine.line.push(callback),
+  run: async (config: any) => {
+    let conf = { ...config };
+    for await (const func of requestFilterLine.line) {
+      conf = { ...func(conf) };
+    }
+    return conf;
+  },
+};
+// axios 請求攔截器註冊函數
+export const axiosFilter: any = requestFilterLine.filter;
+/**
  * 請求攔截器 開發環境下載文件時自動添加參數
  * @param config axios config
  * @tip withoutToken 屬性為 true 時，會刪除全局添加的 access_token
+ * @tip 需要添加攔截器請在 filter 裡面添加
  */
 const requestFilter = (config: AxiosRequestConfig) => {
-  if (!config.params) config.params = {};
-
-  // 自動添加廠區和部門參數
-  let { success, state } = getState<UserAccessModelState>('userAccess');
-  if (success) {
-    let { deptNo, factory } = state!;
-    config.params = { ...config.params, factory, dept: deptNo };
-  }
-
-  // 自動下載文件配置
-  if (isAutoDownload(config)) {
-    config.responseType = 'blob';
-  }
-
-  // 開發環境下自動添加下載類型參數（用於proxy代理工具）
-  let { responseType } = config;
-  if (responseType && constants.IS_DEV) {
-    config.params['_responseType'] = responseType;
-  }
-
-  // 自動切換接口地址
-  let base: string = config.url?.split('/')[1] || '';
-  let apis: any = constants.APIS;
-  if (apis[base]) {
-    config.url = apis[base] + config.url;
-  }
-
-  // 刪除ACCESS_TOKEN
-  if (config.headers.common.Authorization && (config as any).withoutToken) {
-    delete config.headers.common.Authorization;
-  }
-  return config;
+  return requestFilterLine.run(config);
 };
 /**
  * 自動下載文件

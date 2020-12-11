@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import constants from './constants';
+import constants from '../constants';
 
 /**
  * @description 生成一個長度爲8的隨機字符串

@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { getUe, EditorOptions } from '@/plugins/editor';
+import { getUe, EditorOptions } from '@/plugins/load/editor';
 
 interface EditorProps {
   defaultValue?: any;

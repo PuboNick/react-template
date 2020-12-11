@@ -1,6 +1,6 @@
 import React, { FC, useRef, useState, useEffect } from 'react';
 
-import { getEcharts } from '@/plugins/echarts';
+import { getEcharts } from '@/plugins/load/echarts';
 
 interface EchartsProps {
   options: any;

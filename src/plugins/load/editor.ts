@@ -1,5 +1,5 @@
-import { loadScript } from './utils';
-import constants from './constants';
+import { loadScript } from '../utils/utils';
+import constants from '../constants';
 
 // UE 編輯器對象
 let UE = (window as any).UE || null;
