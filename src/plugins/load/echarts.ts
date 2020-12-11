@@ -1,5 +1,5 @@
 import constants from '../constants';
-import { loadScript } from '../utils/utils';
+import { loadScript } from '../utils';
 
 // 設置 echarts 變量
 let echarts: any = null;

@@ -1,4 +1,4 @@
-import { random } from './utils';
+import { random } from '.';
 
 /**
  * @description 下载文件

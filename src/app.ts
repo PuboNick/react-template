@@ -3,7 +3,8 @@ import { addLocale } from 'umi';
 
 import { initAxios } from '@/plugins/request/axios';
 import '@/assets/style.less';
-import '@/plugins/request/filter';
+import '@/plugins/request/reqFilter';
+import '@/plugins/request/resFilter';
 import { getMenuList, getFactoryList } from './pages/user/userService';
 
 const option: any = {

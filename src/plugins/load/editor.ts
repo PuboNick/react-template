@@ -1,4 +1,4 @@
-import { loadScript } from '../utils/utils';
+import { loadScript } from '../utils';
 import constants from '../constants';
 
 // UE 編輯器對象

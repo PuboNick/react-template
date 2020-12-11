@@ -1,7 +1,7 @@
 // @ts-ignore
 import html2pdf from 'html2pdf.js';
 import { dataURItoBlob } from './utils/file';
-import { loadScript } from './utils/utils';
+import { loadScript } from './utils';
 import constants from './constants';
 
 /**

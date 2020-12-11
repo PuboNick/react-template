@@ -1,4 +1,4 @@
-import { getItemsFormObj, isExpire, setDebounce } from './utils';
+import { getItemsFormObj, isExpire, setDebounce } from '.';
 
 describe('utils test', () => {
   // isExpire 測試用例
