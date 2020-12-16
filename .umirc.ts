@@ -2,7 +2,7 @@ import { defineConfig } from 'umi';
 
 import { chainWebpack, chunks } from './config/chainWebpack';
 import routes from './config/routes';
-import { base, copy } from './config/define';
+import { base, copy, outputPath } from './config/define';
 
 /**
  * umijs 配置項
@@ -11,7 +11,7 @@ import { base, copy } from './config/define';
  * Tip: Targets 配置最低兼容至 ie11 再往下將出現不可預知問題
  */
 export default defineConfig({
-  outputPath: 'dist',
+  outputPath,
   chainWebpack,
   chunks,
   routes,
