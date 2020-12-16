@@ -78,7 +78,7 @@ export const clone = (obj: any): any => {
  * 異步加載script
  */
 export const loadScript = (url: string) => {
-  return new Promise(resolve => {
+  return new Promise((resolve: any) => {
     let script: any = document.getElementById(url);
     if (!script) {
       script = document.createElement('script');
