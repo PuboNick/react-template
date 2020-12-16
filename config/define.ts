@@ -13,6 +13,9 @@ export const base: string = '';
 // 靜態文件夾
 export const copy: any = ['static'];
 
+// 打包文件夾
+export const outputPath: string = 'dist';
+
 /**
  * 接口服务器地址,对应 pont-config 配置
  * 理應一個數據源對應一個地址
