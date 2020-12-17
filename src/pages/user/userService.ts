@@ -5,6 +5,9 @@ import {
 } from '@/apis/iam/mods/common';
 import { iam } from '@/apis/iam/baseClass';
 
+// 系统菜单列表
+let AppMenuList: any = [];
+
 /**
  * 獲取系統菜單
  * @param userId 登錄工號
@@ -22,6 +25,8 @@ export const getMenuList = async (userId: string): Promise<any[]> => {
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
   let { childMenu } = menuList[0];
+  if (!Array.isArray(childMenu)) return [];
+  AppMenuList = [...childMenu];
   return childMenu;
 };
 
@@ -71,7 +76,7 @@ const menuTemp: any = {};
  */
 export const getAccessByPathName = (pathName: string) => {
   if (menuTemp[pathName]) return menuTemp[pathName];
-  let menu = (window as any).AppMenuList || [];
+  let menu = [...AppMenuList] || [];
   let access: any = {};
   let { childSubFunction = [], childMenu = [] } = findAccessItemByPathName(
     menu,

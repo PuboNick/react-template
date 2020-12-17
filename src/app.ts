@@ -16,10 +16,8 @@ initAxios();
 addLocale('zh-TW', {}, option);
 
 export async function getInitialState() {
-  let user = { empNo: 'C3005993', name: '蔣金明' };
-  let menuList = await getMenuList(user.empNo);
-  let factoryList = await getFactoryList(user.empNo);
-  let gl: any = window;
-  gl.AppMenuList = menuList;
+  const user = { empNo: 'C3005993', name: '蔣金明' };
+  const menuList = await getMenuList(user.empNo);
+  const factoryList = await getFactoryList(user.empNo);
   return { menuList, factoryList, user };
 }
