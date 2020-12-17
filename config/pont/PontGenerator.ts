@@ -1,15 +1,9 @@
 /**
  * pont 生成文件模板
  */
-import {
-  Interface,
-  BaseClass,
-  Property,
-  CodeGenerator,
-  Surrounding,
-} from 'pont-engine';
+import { Interface, BaseClass, Property, CodeGenerator } from 'pont-engine';
 
-export default class MyGenerator extends CodeGenerator {
+export default class PontGenerator extends CodeGenerator {
   getInterfaceContentInDeclaration(inter: Interface) {
     const requestParams = inter.getRequestParams();
     const paramsCode = inter.getParamsCode('Params');
@@ -62,7 +56,6 @@ export default class MyGenerator extends CodeGenerator {
       return PontCore.fetch(PontCore.getUrl("${
         inter.path
       }", params, "${method}"), ${inter.getRequestContent()});
-    }
-   `;
+    }`;
   }
 }

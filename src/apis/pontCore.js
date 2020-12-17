@@ -2,23 +2,21 @@
 /**
  * @description pont内置请求单例
  */
-var __assign =
-  (this && this.__assign) ||
-  function() {
-    __assign =
-      Object.assign ||
-      function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-          s = arguments[i];
-          for (var p in s)
-            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-      };
-    return __assign.apply(this, arguments);
-  };
+let __assign = function() {
+  __assign =
+    Object.assign ||
+    function(t) {
+      for (let s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (let p in s)
+          if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+      return t;
+    };
+  return __assign.apply(this, arguments);
+};
 Object.defineProperty(exports, '__esModule', { value: true });
-var PontCoreManager = /** @class */ (function() {
+let Manager = /** @class */ (function() {
   function PontCoreManager() {}
   PontCoreManager.getSignleInstance = function() {
     if (!PontCoreManager.singleInstance) {
@@ -51,22 +49,22 @@ var PontCoreManager = /** @class */ (function() {
     this.fetch = fetch;
   };
   PontCoreManager.prototype.getUrl = function(path, queryParams, method) {
-    var params = __assign({}, queryParams || {});
-    var url = path.replace(/\{([^\\}]*(?:\\.[^\\}]*)*)\}/gm, function(
+    let params = __assign({}, queryParams || {});
+    let url = path.replace(/\{([^\\}]*(?:\\.[^\\}]*)*)\}/gm, function(
       match,
       key,
     ) {
       // eslint-disable-next-line no-param-reassign
       key = key.trim();
       if (params[key] !== undefined) {
-        var value = params[key];
+        let value = params[key];
         delete params[key];
         return value;
       }
       console.warn('Please set value for template key: ', key);
       return '';
     });
-    var paramStr = Object.keys(params)
+    let paramStr = Object.keys(params)
       .map(function(key) {
         return params[key] === undefined ? '' : key + '=' + params[key];
       })
@@ -82,4 +80,4 @@ var PontCoreManager = /** @class */ (function() {
   PontCoreManager.singleInstance = null;
   return PontCoreManager;
 })();
-exports.PontCore = PontCoreManager.getSignleInstance();
+exports.PontCore = Manager.getSignleInstance();

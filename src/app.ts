@@ -19,6 +19,7 @@ export async function getInitialState() {
   let user = { empNo: 'C3005993', name: '蔣金明' };
   let menuList = await getMenuList(user.empNo);
   let factoryList = await getFactoryList(user.empNo);
-  (window as any).AppMenuList = menuList;
+  let gl: any = window;
+  gl.AppMenuList = menuList;
   return { menuList, factoryList, user };
 }
