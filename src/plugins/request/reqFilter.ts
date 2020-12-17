@@ -67,7 +67,7 @@ filter.request((config: any) => {
  * 刪除ACCESS_TOKEN
  */
 filter.request((config: any) => {
-  if (config.headers.common.Authorization && (config as any).withoutToken) {
+  if (config.headers.common.Authorization && config.withoutToken) {
     delete config.headers.common.Authorization;
   }
   return config;

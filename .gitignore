@@ -53,6 +53,8 @@ package-lock.json
 # 本地配置
 *.local.ts
 .mocks/
+sonar-project.properties
+.scannerwork
 
 #使用時解除以下限制
 /src/apis/mods/
