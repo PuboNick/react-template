@@ -23,10 +23,9 @@ filter.request((config: any) => {
  */
 filter.request((config: any) => {
   let { success, state } = getState<UserAccessModelState>('userAccess');
-  if (success) {
-    let { deptNo, factory } = state!;
-    config.params = { ...config.params, factory, dept: deptNo };
-  }
+  if (!success) return config;
+  let { deptNo, factory } = state!;
+  config.params = { ...config.params, factory, dept: deptNo };
   return config;
 });
 
@@ -44,8 +43,9 @@ filter.request((config: any) => {
  * 開發環境下自動添加下載類型參數（用於proxy代理工具）
  */
 filter.request((config: any) => {
+  if (!constants.IS_DEV) return config;
   let { responseType } = config;
-  if (responseType && constants.IS_DEV) {
+  if (responseType) {
     config.params['_responseType'] = responseType;
   }
   return config;
