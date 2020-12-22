@@ -44,4 +44,12 @@ export default {
   PORTRAIT_URI: 'http://10.244.168.180/humattend/emp/queryPhotoByEmpNo?empNo=',
   // 系統在權限系統中的資源 ID
   SYSTEM_ID: 'AE2804619ECB4A54E050F40A5BE75FB3',
+  // matomo系统中注册的站点id，不能乱写
+  PORTAL_SITE_ID: '',
+  // 門戶系統 matomo 服務地址
+  PORTAL_URL: '//10.244.231.138/matomo/',
+  // 門戶統計服務器地址白名單 只有系統在白名單內時才會觸發統計,避免開發和測試時統計
+  MATOMO_SERVER_URLS: ['10.244.168.180'],
+  // 門戶系統需要特殊統計的頁面白名單
+  MATOMO_PAGES: [],
 };

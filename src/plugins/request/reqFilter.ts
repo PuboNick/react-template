@@ -7,7 +7,7 @@
 import { UserAccessModelState } from 'umi';
 import constants from '../constants';
 
-import { getState } from '../dva';
+import { getState } from '../utils/dva';
 import { filter, isAutoDownload } from './axios';
 
 /**

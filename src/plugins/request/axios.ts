@@ -2,6 +2,7 @@ import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
 import constants from '../constants';
 import { PontCore } from '@/apis/pontCore';
+import bootstrap from '../bootstrap';
 
 /**
  * 全局HTTP返回
@@ -108,7 +109,7 @@ function onError(err: AxiosError): ErrorInfoStructure {
 /**
  * 初始化 Axios 配置
  */
-export function initAxios() {
+function initAxios() {
   axios.defaults.baseURL = constants.API_BASE || '/';
   axios.interceptors.response.use(responseFilter, onError);
   axios.interceptors.request.use(requestFilter);
@@ -125,4 +126,6 @@ export function setHeader(name: string, content: string) {
   axios.defaults.headers.common[name] = content;
 }
 
-export default axios;
+bootstrap.onInit(() => {
+  initAxios();
+});

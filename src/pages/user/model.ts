@@ -1,3 +1,4 @@
+import bootstrap from '@/plugins/bootstrap';
 import { Reducer, Subscription } from 'umi';
 import { getAccessByPathName } from './userService';
 
@@ -41,6 +42,7 @@ const UserAccessModel: UserAccessModelType = {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
         dispatch({ type: 'setAccess', payload: { pathname } });
+        bootstrap.historyChange(pathname);
       });
     },
   },
