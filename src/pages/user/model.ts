@@ -42,7 +42,7 @@ const UserAccessModel: UserAccessModelType = {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
         dispatch({ type: 'setAccess', payload: { pathname } });
-        bootstrap.historyChange(pathname);
+        bootstrap.handle('historyChange', pathname);
       });
     },
   },

@@ -126,6 +126,6 @@ export function setHeader(name: string, content: string) {
   axios.defaults.headers.common[name] = content;
 }
 
-bootstrap.onInit(() => {
+bootstrap.on('init', () => {
   initAxios();
 });

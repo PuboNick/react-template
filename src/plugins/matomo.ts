@@ -15,7 +15,7 @@ const whiteList: PageType[] = constants.MATOMO_PAGES;
 // 判斷是否為生產環境
 const isNotProduction = () => {
   const inUrls = serverUrls.some(item => window.location.href.includes(item));
-  return constants.IS_DEV && !inUrls && siteId;
+  return constants.IS_DEV || !inUrls || !siteId;
 };
 
 const loadMatomo = () => {
@@ -81,19 +81,19 @@ export const matomoAddPage = (pageName: string) => {
   _paq.push(['trackPageView']);
 };
 
-bootstrap.onInit(() => {
+bootstrap.on('init', () => {
   initMatomo();
 });
 
-bootstrap.onLogin((user: any) => {
+bootstrap.on('login', (user: any) => {
   matomoLogin(user.empNo);
 });
 
-bootstrap.onLoginOut(() => {
+bootstrap.on('loginOut', () => {
   matomoLoginOut();
 });
 
-bootstrap.onHistoryChange((pathname: string) => {
+bootstrap.on('historyChange', (pathname: string) => {
   const page = whiteList.find(item => item.path === pathname);
   if (page) matomoAddPage(page.name);
 });

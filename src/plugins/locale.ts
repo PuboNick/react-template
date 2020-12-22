@@ -7,6 +7,6 @@ const option: any = {
   antd: zhTW,
 };
 
-bootstrap.onInit(() => {
+bootstrap.on('init', () => {
   addLocale('zh-TW', {}, option);
 });

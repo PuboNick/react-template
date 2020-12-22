@@ -1,37 +1,25 @@
 /**
  * app 生命週期管理器
- * 可以通過 onInit 註冊在進入app時要執行的事件
- * 可以通過 onLogin 註冊登陸後時要執行的事件,回調參數為用戶信息
+ * events:
+ * init 項目初始化時
+ * login 登陸成功後，參數 user {User} 用戶信息
+ * loginOut 登出時
+ * historyChange 頁面切換時, 參數 pathname {字符串} 地址
  */
 
 const bootstrap: any = {
-  initEvents: [],
-  loginEvents: [],
-  loginOutEvents: [],
-  historyChangeEvents: [],
-  init() {
-    bootstrap.initEvents.forEach((func: any) => func());
+  state: {},
+  on(event: string, func: any) {
+    if (!bootstrap.state[event]) bootstrap.state[event] = [];
+    if (typeof func !== 'function') return;
+    bootstrap.state[event].push(func);
   },
-  login(user: any) {
-    bootstrap.loginEvents.forEach((func: any) => func(user));
-  },
-  loginOut() {
-    bootstrap.loginOutEvents.forEach((func: any) => func());
-  },
-  historyChange(pathname: string) {
-    bootstrap.historyChangeEvents.forEach((func: any) => func(pathname));
-  },
-  onInit(func: any) {
-    bootstrap.initEvents.push(func);
-  },
-  onLogin(func: any) {
-    bootstrap.loginEvents.push(func);
-  },
-  onLoginOut(func: any) {
-    bootstrap.loginOutEvents.push(func);
-  },
-  onHistoryChange(func: any) {
-    bootstrap.historyChangeEvents.push(func);
+  handle(event: string, ...args: any) {
+    if (Array.isArray(bootstrap.state[event])) {
+      bootstrap.state[event].forEach((func: any) => {
+        if (typeof func === 'function') func(...args);
+      });
+    }
   },
 };
 
