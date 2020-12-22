@@ -15,7 +15,7 @@ const whiteList: PageType[] = constants.MATOMO_PAGES;
 // 判斷是否為生產環境
 const isNotProduction = () => {
   const inUrls = serverUrls.some(item => window.location.href.includes(item));
-  return constants.IS_DEV && !inUrls;
+  return constants.IS_DEV && !inUrls && siteId;
 };
 
 const loadMatomo = () => {
