@@ -39,6 +39,14 @@ export default class PontGenerator extends CodeGenerator {
     const method = inter.method.toUpperCase();
     const requestParams = inter.getRequestParams(this.surrounding);
     const paramsCode = inter.getParamsCode('Params', this.surrounding);
+    const pathParams = inter.parameters.filter(item => item.in === 'path');
+    let path = inter.path;
+    pathParams.forEach(item => (path += `/\$\{params.${item.name}\}`));
+    if (pathParams.length > 0) {
+      path = '`' + path + '`';
+    } else {
+      path = '"' + path + '"';
+    }
 
     return `
     /**
@@ -46,16 +54,15 @@ export default class PontGenerator extends CodeGenerator {
      */
 
     import * as defs from '../../baseClass';
-    import { PontCore } from '@/apis/pontCore';
+    import { PontCore } from '../../pontCore';
 
     export ${paramsCode}
 
     export const init = ${inter.response.getInitialValue()};
 
     export function request(${requestParams}) {
-      return PontCore.fetch(PontCore.getUrl("${
-        inter.path
-      }", params, "${method}"), ${inter.getRequestContent()});
-    }`;
+      return PontCore.fetch(PontCore.getUrl(${path}, params, "${method}"), ${inter.getRequestContent()});
+    }
+  `;
   }
 }

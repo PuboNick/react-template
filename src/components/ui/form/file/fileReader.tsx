@@ -28,9 +28,9 @@ export default function FileReader({
   };
   return (
     <>
-      <button onClick={() => onBtnClick()} className={btnClassName}>
+      <div onClick={() => onBtnClick()} className={btnClassName}>
         {children}
-      </button>
+      </div>
       <input
         type="file"
         onChange={onChange}
