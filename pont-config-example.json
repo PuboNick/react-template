@@ -1,5 +1,5 @@
 {
-  "templatePath": "./config/pont/template",
+  "templatePath": "./config/pont/PontGenerator",
   "transformPath": "./config/pont/transform",
   "surrounding": "typeScript",
   "mocks": {

@@ -16,7 +16,7 @@ export const init = new defs.iam.ResponseMsg();
 export function request(params: Params, options?: any) {
   return PontCore.fetch(
     PontCore.getUrl(
-      '/iam/Common/queryAuthorityByUserId/{userId}',
+      `/iam/Common/queryAuthorityByUserId/{userId}/${params.userId}`,
       params,
       'GET',
     ),
