@@ -1,6 +1,8 @@
-import bootstrap from '@/plugins/bootstrap';
+import { Effect } from './../../.umi/plugin-dva/connect';
 import { Reducer, Subscription } from 'umi';
-import { getAccessByPathName } from './userService';
+import { createWorkerFactory } from '@shopify/web-worker';
+
+import bootstrap from '@/plugins/bootstrap';
 
 export interface UserAccessModelState {
   access: any;
@@ -15,10 +17,14 @@ export interface UserAccessModelType {
   state: UserAccessModelState;
   reducers: {
     save: Reducer<UserAccessModelState>;
-    setAccess: Reducer<UserAccessModelState>;
+  };
+  effects: {
+    setAccess: Effect;
   };
   subscriptions: { setup: Subscription };
 }
+
+export const userWorker = createWorkerFactory(() => import('./userService'))();
 
 const UserAccessModel: UserAccessModelType = {
   namespace: 'userAccess',
@@ -29,13 +35,18 @@ const UserAccessModel: UserAccessModelType = {
     factory: '',
     deptNo: '',
   },
+  effects: {
+    *setAccess({ payload }, { put, call }) {
+      const { access, childMenu } = yield call(
+        userWorker.getAccessByPathName,
+        payload.pathname,
+      );
+      yield put({ type: 'save', payload: { access, childMenu } });
+    },
+  },
   reducers: {
     save(state, action) {
       return { ...state, ...action.payload };
-    },
-    setAccess(state: any, action) {
-      let { access, childMenu } = getAccessByPathName(action.payload.pathname);
-      return { ...state, access, childMenu };
     },
   },
   subscriptions: {

@@ -31,6 +31,11 @@ export const chainWebpack = (config: any) => {
     minChunks: 1,
     cacheGroups,
   });
+  config.module
+    .rule('mjs')
+    .test(/\.mjs$/)
+    .when(true, (rule: any) => rule.include.add(/node_modules/))
+    .type('javascript/auto');
 };
 
 export const chunks = chunksTemp.concat(['vendors', 'umi']);
