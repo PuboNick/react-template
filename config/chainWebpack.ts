@@ -3,7 +3,16 @@
  */
 
 // 包名 常規配置只需增加或者刪除該數組元素即可
-let chunksTemp: string[] = ['axios', 'react-dom', 'moment', 'antd', '@umijs'];
+let chunksTemp: string[] = [
+  'axios',
+  'react-dom',
+  'moment',
+  'antd',
+  '@umijs',
+  '@shopify',
+  'core-js',
+  '@ant-design',
+];
 
 // webpack 配置方法
 export const chainWebpack = (config: any) => {

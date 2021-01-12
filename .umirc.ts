@@ -22,9 +22,6 @@ export default defineConfig({
   publicPath: `${base}/`,
   hash: true,
   copy,
-  request: {
-    dataField: 'data',
-  },
   exportStatic: {
     htmlSuffix: true,
   },
