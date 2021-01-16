@@ -109,10 +109,14 @@ const requestFilterLine: any = {
     return temp;
   },
 };
+interface AxiosFilter {
+  request: (callback: (config: any) => any) => any;
+  response: (callback: (response: any) => any) => any;
+}
 /**
  * axios 攔截器註冊函數
  */
-export const filter: any = {
+export const filter: AxiosFilter = {
   request: requestFilterLine.request,
   response: requestFilterLine.response,
 };
