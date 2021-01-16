@@ -6,7 +6,7 @@ import constants from '../constants';
  * @description 生成一個長度爲8的隨機字符串
  */
 export const random = (): string => {
-  let arr = new Uint32Array(1);
+  const arr = new Uint32Array(1);
   let number = window.crypto.getRandomValues(arr)[0];
   number = parseFloat('0.' + number.toString());
   return number.toString(32).slice(2, 10);
@@ -135,4 +135,22 @@ export const makeInterval = (
   if (shouldRunFirst) func();
   const interval = setInterval(func, time);
   return () => clearInterval(interval);
+};
+
+/**
+ * json 轉換
+ * @param response
+ */
+export const jsonParser = (str: any) => {
+  let result: { error: null | string; jsonData: any } = {
+    error: '',
+    jsonData: null,
+  };
+  try {
+    result.jsonData = JSON.parse(str);
+  } catch (e) {
+    result.error = 'JSON解析失敗!';
+    result.jsonData = str;
+  }
+  return result;
 };

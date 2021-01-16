@@ -5,9 +5,15 @@
  * login 登陸成功後，參數 user {User} 用戶信息
  * loginOut 登出時
  * historyChange 頁面切換時, 參數 pathname {字符串} 地址
+ * 401 身份認證未通過時
  */
+interface BootstrapType {
+  state: any;
+  on: (event: string, func: any) => any;
+  handle: (event: string, ...args: any) => any;
+}
 
-const bootstrap: any = {
+const bootstrap: BootstrapType = {
   state: {},
   on(event: string, func: any) {
     if (!bootstrap.state[event]) bootstrap.state[event] = [];

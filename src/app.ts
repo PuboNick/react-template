@@ -5,7 +5,7 @@ import '@/plugins/bootstrap/register';
 
 export async function getInitialState() {
   bootstrap.handle('init');
-  const user = { empNo: 'C3005993', name: '蔣金明' };
+  const user = await userWorker.getUser();
   const menuList = await userWorker.getMenuList(user.empNo);
   const factoryList = await userWorker.getFactoryList(user.empNo);
   bootstrap.handle('login', user);

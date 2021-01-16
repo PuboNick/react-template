@@ -27,6 +27,34 @@ const APIS = {
   iam: 'http://10.244.168.180',
 };
 
+/**
+ * 登陸服務配置
+ * @member clientId 客戶端id憑證
+ * @member userApi 獲取用戶信息的地址
+ * @member provider oauth 服務器地址
+ * @member loginOutUrl 登出地址
+ */
+const AUTH = {
+  clientId: '428390e7-368a-4a49-a1c8-e472ab4f8f02',
+  provider: 'http://10.244.168.180/openid/authorize',
+  redirectURI: 'http://localhost:8000',
+  loginOutUrl: 'http://10.244.168.180/logout/?redirecturl=',
+};
+
+/**
+ * 門戶系統對接配置
+ * @member siteId matomo系统中注册的站点id，不能乱写
+ * @member url 門戶系統 matomo 服務地址
+ * @member whiteList 門戶統計服務器地址白名單 只有系統在白名單內時才會觸發統計,避免開發和測試時統計
+ * @member pages 門戶系統需要特殊統計的頁面白名單 { name: '', path: '' }
+ */
+const PORTAL = {
+  siteId: '',
+  url: '//10.244.231.138/matomo/',
+  whiteList: ['10.244.168.180'],
+  pages: [],
+};
+
 export default {
   // 接口地址
   APIS,
@@ -44,12 +72,8 @@ export default {
   PORTRAIT_URI: 'http://10.244.168.180/humattend/emp/queryPhotoByEmpNo?empNo=',
   // 系統在權限系統中的資源 ID
   SYSTEM_ID: 'AE2804619ECB4A54E050F40A5BE75FB3',
-  // matomo系统中注册的站点id，不能乱写
-  PORTAL_SITE_ID: '',
-  // 門戶系統 matomo 服務地址
-  PORTAL_URL: '//10.244.231.138/matomo/',
-  // 門戶統計服務器地址白名單 只有系統在白名單內時才會觸發統計,避免開發和測試時統計
-  MATOMO_SERVER_URLS: ['10.244.168.180'],
-  // 門戶系統需要特殊統計的頁面白名單 { name: '', path: '' }
-  MATOMO_PAGES: [],
+  // 登陸配置
+  AUTH,
+  // 門戶統計配置
+  PORTAL,
 };

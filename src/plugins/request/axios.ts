@@ -3,6 +3,8 @@ import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 import constants from '../constants';
 import { PontCore } from '@/apis/pontCore';
 import bootstrap from '../bootstrap';
+import { jsonParser } from '../utils';
+import { blob2text, downloadFile } from '../utils/file';
 
 /**
  * 全局HTTP返回
@@ -36,12 +38,54 @@ export function isAutoDownload(config: any) {
   return config?.download?.auto;
 }
 /**
- * 打印日誌
- * @param {any} message 內容
+ * 自動下載文件
+ * @param data Blob 文件
+ * @param headers 返回頭
+ * @description 需要在config中添加 download: { auto: true, fileName?: string }
+ * 當 fileName 為空時使用服務器提供的文件名
  */
-export function log<T>(message: T): T {
-  console.log(message);
-  return message;
+const toDownload = (data: Blob, headers: any, config: any) => {
+  let url = URL.createObjectURL(data);
+  let fileName = config?.download?.fileName;
+  if (!fileName) {
+    fileName = headers['content-disposition']?.split('=')[1] || '';
+  }
+  downloadFile(url, decodeURI(fileName));
+  return { success: true };
+};
+/**
+ * 處理返回值
+ * @param response
+ */
+function handleResponse(res: any, url: string): any {
+  const { code, msg = '', data, message = '' } = res;
+  const success = code === '200' || code === 200;
+  let errorMessage = msg || message || '';
+  if (success) return { success, data, errorCode: '0', errorMessage };
+  let config = { success, data, errorCode: code, errorMessage, url };
+  if (code && !success) return config;
+  let { error, jsonData }: any = jsonParser(res);
+  if (error) {
+    return { success: true, data: res, errorCode: '0', errorMessage: '', url };
+  }
+  return handleResponse(jsonData, url);
+}
+/**
+ * 獲取數據成功
+ * @param response 返回內容
+ * @returns ErrorInfoStructure 全局HTTP返回
+ */
+async function parseResponse(response: AxiosResponse) {
+  const url: any = response.config.url;
+  const data = response.data;
+  const types = ['blob'];
+  let isBlobFile = types.includes(response.config.responseType || '');
+  if (!isBlobFile) return handleResponse(data, url);
+  if (!isAutoDownload(response.config)) return handleResponse(data, url);
+  let text: any = await blob2text(response.data);
+  let result = handleResponse(text, url);
+  if (!result.success) return result;
+  return toDownload(data, response.headers, response.config);
 }
 /**
  * 攔截器擴展方法
@@ -86,7 +130,7 @@ const requestFilter = async (config: AxiosRequestConfig) => {
  * 返回值攔截器
  * @tip 需要擴展攔截器功能請在resFilter 註冊
  */
-const responseFilter = async (response: AxiosResponse) => {
+const responseFilter = async (response: any) => {
   let res = await requestFilterLine.run(response, requestFilterLine.resLine);
   return res;
 };
@@ -95,23 +139,41 @@ const responseFilter = async (response: AxiosResponse) => {
  * @param err 錯誤內容
  * @returns ErrorInfoStructure 全局HTTP返回
  */
-function onError(err: AxiosError): ErrorInfoStructure {
+async function onError(err: AxiosError) {
   const response: AxiosResponse | undefined = err.response;
-  const errorCode: string = response?.status.toString() || '';
-  const errorMessage: string = response?.statusText || '';
-  return log<ErrorInfoStructure>({
+  let res: ErrorInfoStructure = {
     success: false,
-    data: response,
-    errorCode,
-    errorMessage,
-  });
+    data: err,
+    errorCode: '0000',
+    errorMessage: '請求發送失敗',
+  };
+  if (response) {
+    const errorCode: string = response?.status.toString() || '';
+    const errorMessage: string = response?.statusText || '';
+    res = {
+      success: false,
+      data: response,
+      errorCode,
+      errorMessage,
+    };
+  }
+  const results = await responseFilter(res);
+  return results;
 }
+/**
+ * 將返回值處理成統一格式
+ */
+const onSuccess = async (response: AxiosResponse) => {
+  const res = await parseResponse(response);
+  const results = await responseFilter(res);
+  return results;
+};
 /**
  * 初始化 Axios 配置
  */
 function initAxios() {
   axios.defaults.baseURL = constants.API_BASE || '/';
-  axios.interceptors.response.use(responseFilter, onError);
+  axios.interceptors.response.use(onSuccess, onError);
   axios.interceptors.request.use(requestFilter);
   PontCore.useFetch((url, options = {}) =>
     axios({ ...options, url, data: options.body }),

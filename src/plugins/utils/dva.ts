@@ -18,8 +18,18 @@ type StateRes<T> = StateSuccess<T> | StateFalse<T>;
  * @param namespace model 命名空間
  */
 export const getState = <T>(namespace: string): StateRes<T> => {
-  let store = getDvaApp();
-  if (!store) return { error: '獲取dva失敗!', success: false, state: null };
-  let state: T = store._store.getState()[namespace];
+  let dva = getDvaApp();
+  if (!dva) return { error: '獲取dva失敗!', success: false, state: null };
+  let state: T = dva._store.getState()[namespace];
   return { state, success: true, error: null };
+};
+
+/**
+ * 使用 dispatch
+ * @param action
+ */
+export const dvaDispatch = (action: any) => {
+  let dva = getDvaApp();
+  if (!dva) return;
+  dva._store.dispatch(action);
 };

@@ -1,3 +1,6 @@
+import axios from 'axios';
+import { message } from 'antd';
+
 import constants from '@/plugins/constants';
 import {
   queryIsExistAuthority,
@@ -88,4 +91,18 @@ export const getAccessByPathName = (pathName: string) => {
   let results = { access, childMenu };
   menuTemp[pathName] = results;
   return results;
+};
+
+/**
+ * 獲取用戶信息
+ */
+export const getUser = async () => {
+  const userApi = 'http://10.244.231.135:8080/tools/auth/getUserInfo';
+  const { success, data, errorMessage }: any = await axios.get(userApi);
+  if (!success) {
+    message.error(errorMessage);
+    return {};
+  }
+  const { sub, preferred_username } = data;
+  return { name: preferred_username, empNo: sub };
 };
