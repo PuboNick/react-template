@@ -20,11 +20,13 @@ const bootstrap: BootstrapType = {
     if (typeof func !== 'function') return;
     bootstrap.state[event].push(func);
   },
-  handle(event: string, ...args: any) {
+  async handle(event: string, ...args: any) {
     if (Array.isArray(bootstrap.state[event])) {
-      bootstrap.state[event].forEach((func: any) => {
-        if (typeof func === 'function') func(...args);
-      });
+      const funList = bootstrap.state[event];
+      for (let i = 0; i < funList.length; i++) {
+        const func = funList[i];
+        if (typeof func === 'function') await func(...args);
+      }
     }
   },
 };
