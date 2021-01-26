@@ -154,3 +154,8 @@ export const jsonParser = (str: any) => {
   }
   return result;
 };
+
+// 延遲等待
+export const sleep = async (time: number) => {
+  await new Promise((resolve: any) => setTimeout(() => resolve(), time));
+};

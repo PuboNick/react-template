@@ -1,9 +1,11 @@
+import { message } from 'antd';
 import qs from 'querystring';
-import bootstrap from '@/plugins/bootstrap';
 
 import constants from '../constants';
 import { jsonParser, random } from '../utils';
+import bootstrap from '@/plugins/bootstrap';
 import { setHeader } from '../request/axios';
+import { sleep } from './../utils/index';
 
 const client_id = constants.AUTH.clientId;
 const path = constants.AUTH.provider;
@@ -25,16 +27,17 @@ const params = {
 /**
  * 跳轉登陸頁面
  */
-const toLogin = () => {
+const toLogin = async () => {
   sessionStorage.setItem(tempIndex, window.location.href);
   window.location.href = `${path}?${qs.stringify(params)}`;
+  await sleep(1000);
 };
 
 /**
  * 存儲 token
  * @param token { access_token }
  */
-const setToken = (token: any) => {
+const setToken = async (token: any) => {
   sessionStorage.setItem(index, JSON.stringify(token));
   const url = sessionStorage.getItem(tempIndex);
   if (url) {
@@ -47,22 +50,25 @@ const setToken = (token: any) => {
 /**
  * 獲取 token
  */
-const getToken = () => {
+const getToken = async () => {
   const query = qs.parse(window.location.href.split('#')[1]);
   const { access_token, token_type } = query;
-  if (access_token) return setToken({ access_token, token_type });
+  if (access_token) return await setToken({ access_token, token_type });
   const session = sessionStorage.getItem(index);
-  if (!session) return toLogin();
+  if (!session) return await toLogin();
   const { error, jsonData } = jsonParser(session);
-  if (error) return toLogin();
+  if (error) return await toLogin();
   return jsonData;
 };
 
 /**
  * 登陸驗證
  */
-bootstrap.on('init', () => {
-  setHeader('Authorization', `Bearer ${getToken().access_token}`);
+bootstrap.on('init', async () => {
+  const token = await getToken();
+  if (token) {
+    setHeader('Authorization', `Bearer ${token.access_token}`);
+  }
 });
 
 /**
@@ -74,4 +80,14 @@ bootstrap.on('loginOut', () => {
   window.location.href = url;
 });
 
-bootstrap.on('401', () => toLogin());
+bootstrap.on('401', (errorMessage: string) => {
+  sessionStorage.removeItem(index);
+  const key = `${index}/401`;
+  if (sessionStorage.getItem(key)) {
+    message.error(errorMessage);
+    sessionStorage.removeItem(key);
+  } else {
+    sessionStorage.setItem(key, '1');
+    toLogin();
+  }
+});
