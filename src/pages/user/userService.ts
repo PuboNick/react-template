@@ -15,7 +15,7 @@ let AppMenuList: any = [];
  * 獲取系統菜單
  * @param userId 登錄工號
  */
-export const getMenuList = async (userId: string): Promise<any[]> => {
+const getMenuList = async (userId: string): Promise<any[]> => {
   let body = new iam.authorityQueryDTO();
   body.authorityData = constants.SYSTEM_ID;
   body.userId = userId;
@@ -37,7 +37,7 @@ export const getMenuList = async (userId: string): Promise<any[]> => {
  * 獲取系統廠區
  * @param userId 登錄工號
  */
-export const getFactoryList = async (userId: string): Promise<any[]> => {
+const getFactoryList = async (userId: string): Promise<any[]> => {
   let body = new iam.authorityQueryDTO();
   body.authorityData = constants.SYSTEM_ID;
   body.userId = userId;
@@ -51,6 +51,17 @@ export const getFactoryList = async (userId: string): Promise<any[]> => {
   if (!isAuthority || !menuList || menuList.length < 1) return [];
   let { userRelation } = menuList[0] || [];
   return userRelation;
+};
+
+/**
+ * 獲取權限信息
+ * @param empNo 工號
+ */
+export const getAccess = async (empNo: string) => {
+  const menuList = await getMenuList(empNo);
+  const factoryList = await getFactoryList(empNo);
+  const isAuthority = menuList.length > 0 && factoryList.length > 0;
+  return { menuList, factoryList, isAuthority };
 };
 
 /**

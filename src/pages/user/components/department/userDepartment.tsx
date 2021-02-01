@@ -1,14 +1,13 @@
 import React, { FC } from 'react';
-import { connect, ConnectProps, useDispatch, UserAccessModelState } from 'umi';
+import { useDispatch, UserAccessModelState, useSelector } from 'umi';
 import { Select } from 'antd';
 
 const { Option } = Select;
 
-interface UserDepartmentProps extends ConnectProps {
-  userAccess: UserAccessModelState;
-}
-
-const UserDepartment: FC<UserDepartmentProps> = ({ userAccess }) => {
+const UserDepartment = () => {
+  const userAccess: UserAccessModelState = useSelector(
+    (dva: any) => dva.userAccess,
+  );
   let { deptList } = userAccess;
   const dispatch = useDispatch();
 
@@ -32,6 +31,4 @@ const UserDepartment: FC<UserDepartmentProps> = ({ userAccess }) => {
   );
 };
 
-export default connect(
-  ({ userAccess }: { userAccess: UserAccessModelState }) => ({ userAccess }),
-)(UserDepartment);
+export default UserDepartment;

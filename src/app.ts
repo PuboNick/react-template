@@ -6,8 +6,7 @@ import '@/plugins/bootstrap/register';
 export async function getInitialState() {
   await bootstrap.handle('init');
   const user = await userWorker.getUser();
-  const menuList = await userWorker.getMenuList(user.empNo);
-  const factoryList = await userWorker.getFactoryList(user.empNo);
+  const access = await userWorker.getAccess(user.empNo);
   await bootstrap.handle('login', user);
-  return { menuList, factoryList, user };
+  return { ...access, user };
 }

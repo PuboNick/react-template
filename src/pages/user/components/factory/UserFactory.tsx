@@ -1,20 +1,13 @@
 import React, { FC, useEffect } from 'react';
-import {
-  connect,
-  ConnectProps,
-  useDispatch,
-  useModel,
-  UserAccessModelState,
-} from 'umi';
+import { useDispatch, useModel, UserAccessModelState, useSelector } from 'umi';
 import { Select } from 'antd';
 
 const { Option } = Select;
 
-export interface UserFactoryProps extends ConnectProps {
-  userAccess: UserAccessModelState;
-}
-
-const UserFactory: FC<UserFactoryProps> = ({ userAccess }) => {
+const UserFactory = () => {
+  const userAccess: UserAccessModelState = useSelector(
+    (dva: any) => dva.userAccess,
+  );
   const { initialState } = useModel('@@initialState');
   const { factoryList }: any = initialState;
   const dispatch = useDispatch();
@@ -58,6 +51,4 @@ const UserFactory: FC<UserFactoryProps> = ({ userAccess }) => {
   );
 };
 
-export default connect(
-  ({ userAccess }: { userAccess: UserAccessModelState }) => ({ userAccess }),
-)(UserFactory);
+export default UserFactory;
