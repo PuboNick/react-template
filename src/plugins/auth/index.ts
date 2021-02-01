@@ -4,7 +4,6 @@ import qs from 'querystring';
 import constants from '../constants';
 import { jsonParser, random } from '../utils';
 import bootstrap from '@/plugins/bootstrap';
-import { setHeader } from '../request/axios';
 import { sleep } from './../utils/index';
 
 const client_id = constants.AUTH.clientId;
@@ -67,7 +66,7 @@ const getToken = async () => {
 bootstrap.on('init', async () => {
   const token = await getToken();
   if (token) {
-    setHeader('Authorization', `Bearer ${token.access_token}`);
+    bootstrap.handle('getToken', token.access_token);
   }
 });
 

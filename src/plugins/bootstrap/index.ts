@@ -6,6 +6,7 @@
  * loginOut 登出時
  * historyChange 頁面切換時, 參數 pathname {字符串} 地址
  * 401 身份認證未通過時
+ * getToken 獲取到 access_token 時, 參數 access_token {字符串}
  */
 interface BootstrapType {
   state: any;

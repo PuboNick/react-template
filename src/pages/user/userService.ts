@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { request } from 'umi';
 import { message } from 'antd';
 
 import constants from '@/plugins/constants';
@@ -19,11 +19,9 @@ const getMenuList = async (userId: string): Promise<any[]> => {
   let body = new iam.authorityQueryDTO();
   body.authorityData = constants.SYSTEM_ID;
   body.userId = userId;
-  let { data, success }: any = await queryIsExistAuthority.request(
-    {},
-    body,
-    {},
-  );
+  let { data, success }: any = await queryIsExistAuthority.request({}, body, {
+    withoutToken: true,
+  });
   if (!success || !data) return [];
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
@@ -109,7 +107,7 @@ export const getAccessByPathName = (pathName: string) => {
  */
 export const getUser = async () => {
   const userApi = 'http://10.244.231.135:8080/tools/auth/getUserInfo';
-  const { success, data, errorMessage }: any = await axios.get(userApi);
+  const { success, data, errorMessage }: any = await request(userApi);
   if (!success) {
     message.error(errorMessage);
     return {};
