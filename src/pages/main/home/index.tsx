@@ -1,5 +1,6 @@
-import bootstrap from '@/plugins/bootstrap';
 import React, { FC } from 'react';
+
+import bootstrap from '@/plugins/bootstrap';
 
 const IndexPage: FC = () => {
   return (
