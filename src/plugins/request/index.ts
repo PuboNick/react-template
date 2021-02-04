@@ -15,7 +15,7 @@ bootstrap.on('init', () => {
 });
 
 bootstrap.on('getToken', (header: any) => {
-  // headers['Authorization'] = `Bearer ${header}`;
+  headers['Authorization'] = `Bearer ${header}`;
 });
 
 export const requestConfig: RequestConfig = {
