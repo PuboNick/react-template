@@ -1,8 +1,6 @@
-import { sleep } from './plugins/utils/index';
 import { userWorker } from 'umi';
 import bootstrap from './plugins/bootstrap';
 
-import { requestConfig } from './plugins/request';
 import '@/plugins/bootstrap/register';
 
 export async function getInitialState() {
@@ -13,5 +11,3 @@ export async function getInitialState() {
   bootstrap.handle('mount');
   return { ...access, user };
 }
-
-export const request = requestConfig;
