@@ -1,8 +1,6 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
 import constants from '../constants';
-import { PontCore } from '@/apis/pontCore';
-import bootstrap from '../bootstrap';
 import { jsonParser } from '../utils';
 import { blob2text, downloadFile } from '../utils/file';
 
@@ -30,6 +28,15 @@ export interface ErrorInfoStructure {
   traceId?: string;
   host?: string;
 }
+
+type RequestFactory = (
+  params?: any,
+  data?: any,
+  config?: any,
+) => Promise<ErrorInfoStructure>;
+
+type CreateApiFactoryProps = (options: AxiosRequestConfig) => RequestFactory;
+
 /**
  * 判斷是否添加了自動下載
  * @param config axios配置
@@ -175,13 +182,10 @@ const onSuccess = async (response: AxiosResponse) => {
 /**
  * 初始化 Axios 配置
  */
-function initAxios() {
+export function initAxios() {
   axios.defaults.baseURL = constants.API_BASE || '/';
   axios.interceptors.response.use(onSuccess, onError);
   axios.interceptors.request.use(requestFilter);
-  PontCore.useFetch((url, options = {}) =>
-    axios({ ...options, url, data: options.body }),
-  );
 }
 /**
  * 設置公共請求頭
@@ -192,6 +196,14 @@ export function setHeader(name: string, content: string) {
   axios.defaults.headers.common[name] = content;
 }
 
-bootstrap.on('init', () => {
-  initAxios();
-});
+/**
+ * 創建api工廠方法
+ * @param options AxiosRequestConfig
+ */
+export const createApiFactory: CreateApiFactoryProps = options => {
+  return (params, data, config) => {
+    const opt = { ...options, params, data, ...config };
+    const results: any = axios(opt);
+    return results;
+  };
+};

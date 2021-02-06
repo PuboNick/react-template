@@ -1,12 +1,7 @@
-import { request } from 'umi';
+import { getFactoryApi, getMenuApi, getUserApi } from './userApi';
 import { message } from 'antd';
 
 import constants from '@/plugins/constants';
-import {
-  queryIsExistAuthority,
-  queryAuthorityOrganization,
-} from '@/apis/iam/mods/common';
-import { iam } from '@/apis/iam/baseClass';
 
 // 系统菜单列表
 let AppMenuList: any = [];
@@ -16,10 +11,8 @@ let AppMenuList: any = [];
  * @param userId 登錄工號
  */
 const getMenuList = async (userId: string): Promise<any[]> => {
-  let body = new iam.authorityQueryDTO();
-  body.authorityData = constants.SYSTEM_ID;
-  body.userId = userId;
-  let { data, success }: any = await queryIsExistAuthority.request({}, body, {
+  const body = { authorityData: constants.SYSTEM_ID, userId };
+  let { data, success } = await getMenuApi({}, body, {
     withoutToken: true,
   });
   if (!success || !data) return [];
@@ -36,14 +29,10 @@ const getMenuList = async (userId: string): Promise<any[]> => {
  * @param userId 登錄工號
  */
 const getFactoryList = async (userId: string): Promise<any[]> => {
-  let body = new iam.authorityQueryDTO();
-  body.authorityData = constants.SYSTEM_ID;
-  body.userId = userId;
-  let { data, success }: any = await queryAuthorityOrganization.request(
-    {},
-    body,
-    {},
-  );
+  const body = { authorityData: constants.SYSTEM_ID, userId };
+  let { data, success } = await getFactoryApi({}, body, {
+    withoutToken: true,
+  });
   if (!success || !data) return [];
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
@@ -106,8 +95,7 @@ export const getAccessByPathName = (pathName: string) => {
  * 獲取用戶信息
  */
 export const getUser = async () => {
-  const userApi = 'http://10.244.231.135:8080/tools/auth/getUserInfo';
-  const { success, data, errorMessage }: any = await request(userApi);
+  const { success, data, errorMessage } = await getUserApi();
   if (!success) {
     message.error(errorMessage);
     return {};

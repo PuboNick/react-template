@@ -8,7 +8,7 @@
   width: 100%;
   z-index: 999;
   transition: all 1s;
-  background: #fff;
+  background: rgba(9, 9, 9, 0.1);
 }
 
 .sk-cube-grid {
