@@ -13,10 +13,12 @@ export const getUserApi = createApiFactory({
 export const getMenuApi = createApiFactory({
   url: `${aimBaseUri}queryIsExistAuthority`,
   method: 'POST',
+  withoutToken: true,
 });
 
 // 獲取廠區菜單
 export const getFactoryApi = createApiFactory({
   url: `${aimBaseUri}queryAuthorityOrganization`,
   method: 'POST',
+  withoutToken: true,
 });

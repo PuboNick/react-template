@@ -35,7 +35,21 @@ type RequestFactory = (
   config?: any,
 ) => Promise<ErrorInfoStructure>;
 
-type CreateApiFactoryProps = (options: AxiosRequestConfig) => RequestFactory;
+/**
+ * download 是否自動下載文件
+ * withoutToken 是否自動刪除 access_token
+ */
+interface CreateApiFactoryConfig extends AxiosRequestConfig {
+  withoutToken?: boolean;
+  download?: {
+    auto: boolean;
+    fileName?: string;
+  };
+}
+
+type CreateApiFactoryProps = (
+  options: CreateApiFactoryConfig,
+) => RequestFactory;
 
 /**
  * 判斷是否添加了自動下載

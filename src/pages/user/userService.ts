@@ -12,9 +12,7 @@ let AppMenuList: any = [];
  */
 const getMenuList = async (userId: string): Promise<any[]> => {
   const body = { authorityData: constants.SYSTEM_ID, userId };
-  let { data, success } = await getMenuApi({}, body, {
-    withoutToken: true,
-  });
+  let { data, success } = await getMenuApi({}, body);
   if (!success || !data) return [];
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
@@ -30,9 +28,7 @@ const getMenuList = async (userId: string): Promise<any[]> => {
  */
 const getFactoryList = async (userId: string): Promise<any[]> => {
   const body = { authorityData: constants.SYSTEM_ID, userId };
-  let { data, success } = await getFactoryApi({}, body, {
-    withoutToken: true,
-  });
+  let { data, success } = await getFactoryApi({}, body);
   if (!success || !data) return [];
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
