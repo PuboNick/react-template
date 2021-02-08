@@ -4,20 +4,20 @@ const userBaseUri = 'http://10.244.231.135:8080/tools/auth';
 const aimBaseUri = '/iam/Common/';
 
 // 獲取用戶信息
-export const getUserApi = createApiFactory({
+export const getUserInfo = createApiFactory({
   url: `${userBaseUri}/getUserInfo`,
   method: 'GET',
 });
 
 // 獲取菜單
-export const getMenuApi = createApiFactory({
+export const queryIsExistAuthority = createApiFactory({
   url: `${aimBaseUri}queryIsExistAuthority`,
   method: 'POST',
   withoutToken: true,
 });
 
 // 獲取廠區菜單
-export const getFactoryApi = createApiFactory({
+export const queryAuthorityOrganization = createApiFactory({
   url: `${aimBaseUri}queryAuthorityOrganization`,
   method: 'POST',
   withoutToken: true,

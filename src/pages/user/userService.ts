@@ -1,7 +1,7 @@
-import { getFactoryApi, getMenuApi, getUserApi } from './userApi';
 import { message } from 'antd';
 
 import constants from '@/plugins/constants';
+import * as userApi from './userApi';
 
 // 系统菜单列表
 let AppMenuList: any = [];
@@ -12,7 +12,7 @@ let AppMenuList: any = [];
  */
 const getMenuList = async (userId: string): Promise<any[]> => {
   const body = { authorityData: constants.SYSTEM_ID, userId };
-  let { data, success } = await getMenuApi({}, body);
+  let { data, success } = await userApi.queryIsExistAuthority({}, body);
   if (!success || !data) return [];
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
@@ -28,7 +28,7 @@ const getMenuList = async (userId: string): Promise<any[]> => {
  */
 const getFactoryList = async (userId: string): Promise<any[]> => {
   const body = { authorityData: constants.SYSTEM_ID, userId };
-  let { data, success } = await getFactoryApi({}, body);
+  let { data, success } = await userApi.queryAuthorityOrganization({}, body);
   if (!success || !data) return [];
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
@@ -91,7 +91,7 @@ export const getAccessByPathName = (pathName: string) => {
  * 獲取用戶信息
  */
 export const getUser = async () => {
-  const { success, data, errorMessage } = await getUserApi();
+  const { success, data, errorMessage } = await userApi.getUserInfo();
   if (!success) {
     message.error(errorMessage);
     return {};
