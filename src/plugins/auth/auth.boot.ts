@@ -4,7 +4,7 @@ import qs from 'querystring';
 import constants from '../constants';
 import { jsonParser, random } from '../utils';
 import bootstrap from '@/plugins/bootstrap';
-import { sleep } from './../utils/index';
+import { sleep } from '../utils/index';
 
 const client_id = constants.AUTH.clientId;
 const path = constants.AUTH.provider;

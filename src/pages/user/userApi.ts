@@ -1,24 +1,21 @@
-import { createApiFactory } from '@/plugins/request/axios';
+import { createApiFactory } from '@/plugins/request';
 
 const userBaseUri = 'http://10.244.231.135:8080/tools/auth';
 const aimBaseUri = '/iam/Common/';
 
-// 獲取用戶信息
-export const getUserInfo = createApiFactory({
-  url: `${userBaseUri}/getUserInfo`,
-  method: 'GET',
-});
-
-// 獲取菜單
-export const queryIsExistAuthority = createApiFactory({
-  url: `${aimBaseUri}queryIsExistAuthority`,
-  method: 'POST',
-  withoutToken: true,
-});
-
-// 獲取廠區菜單
-export const queryAuthorityOrganization = createApiFactory({
-  url: `${aimBaseUri}queryAuthorityOrganization`,
-  method: 'POST',
-  withoutToken: true,
+export default createApiFactory({
+  queryAuthorityOrganization: {
+    url: `${aimBaseUri}queryAuthorityOrganization`,
+    method: 'POST',
+    withoutToken: true,
+  },
+  queryIsExistAuthority: {
+    url: `${aimBaseUri}queryIsExistAuthority`,
+    method: 'POST',
+    withoutToken: true,
+  },
+  getUserInfo: {
+    url: `${userBaseUri}/getUserInfo`,
+    method: 'GET',
+  },
 });

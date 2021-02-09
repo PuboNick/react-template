@@ -1,9 +1,10 @@
 /**
- * 加載組件
+ * 自動加載 .boot.ts 結尾的組件
  */
-import '@/plugins/loading';
-import '@/plugins/locale';
-import '@/plugins/matomo';
-import '@/plugins/request';
-import '@/plugins/auth';
 import '@/assets/style.less';
+
+const requireComponent = require.context('../', true, /\.boot\.ts$/);
+
+requireComponent.keys().forEach(fileName => {
+  requireComponent(fileName);
+});

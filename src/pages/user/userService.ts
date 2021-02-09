@@ -1,7 +1,7 @@
 import { message } from 'antd';
 
 import constants from '@/plugins/constants';
-import * as userApi from './userApi';
+import userApi from './userApi';
 
 // 系统菜单列表
 let AppMenuList: any = [];

@@ -19,7 +19,7 @@
  */
 import bootstrap from '../bootstrap';
 import constants from '../constants';
-import { filter, ErrorInfoStructure } from './axios';
+import { filter, ErrorInfoStructure } from '.';
 
 /**
  * 打印日誌

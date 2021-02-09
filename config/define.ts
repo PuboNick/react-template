@@ -16,6 +16,9 @@ export const copy: any = ['static'];
 // 打包文件夾
 export const outputPath: string = 'dist';
 
+// 是否為開發環境
+const IS_DEV = process.env.NODE_ENV === 'development';
+
 /**
  * 接口服务器地址,对应 pont-config 配置
  * 理應一個數據源對應一個地址
@@ -56,6 +59,7 @@ const PORTAL = {
 };
 
 export default {
+  IS_DEV,
   // 接口地址
   APIS,
   // 項目根路徑

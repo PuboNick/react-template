@@ -8,7 +8,7 @@ import { UserAccessModelState } from 'umi';
 import constants from '../constants';
 
 import { getState } from '../utils/dva';
-import { filter, isAutoDownload } from './axios';
+import { filter, isAutoDownload } from '.';
 
 /**
  * @description params 防空處理
