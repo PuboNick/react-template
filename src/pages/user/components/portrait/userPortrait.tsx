@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Avatar } from 'antd';
-import constants from '@/plugins/constants';
+import constants from '@/system/constants';
 import { useModel } from 'umi';
 
 interface UserPortraitProps {

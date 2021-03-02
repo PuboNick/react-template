@@ -4,10 +4,7 @@
  * @tip withoutToken 屬性為 true 時，會刪除全局添加的 access_token
  * @description 按照 filter.request 註冊順序執行
  */
-import { UserAccessModelState } from 'umi';
-import constants from '../constants';
-
-import { getState } from '../utils/dva';
+import constants from '../../system/constants';
 import { filter, isAutoDownload } from '.';
 
 /**
@@ -15,17 +12,6 @@ import { filter, isAutoDownload } from '.';
  */
 filter.request((config: any) => {
   if (!config.params) config.params = {};
-  return config;
-});
-
-/**
- * 自動添加廠區和部門參數
- */
-filter.request((config: any) => {
-  let { success, state } = getState<UserAccessModelState>('userAccess');
-  if (!success) return config;
-  let { deptNo, factory } = state!;
-  config.params = { ...config.params, factory, dept: deptNo };
   return config;
 });
 

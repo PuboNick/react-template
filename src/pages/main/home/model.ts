@@ -1,4 +1,4 @@
-import constants from '@/plugins/constants';
+import constants from '@/system/constants';
 import { Effect, Reducer, Subscription } from 'umi';
 
 export interface IndexModelState {

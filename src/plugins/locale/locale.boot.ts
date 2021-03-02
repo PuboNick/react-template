@@ -1,7 +1,7 @@
 import { addLocale } from 'umi';
 import zhTW from 'antd/es/locale/zh_TW';
 
-import bootstrap from '../bootstrap';
+import bootstrap from '../../system/bootstrap';
 
 const option: any = {
   momentLocale: 'zh-tw',

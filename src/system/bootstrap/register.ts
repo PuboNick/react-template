@@ -3,7 +3,7 @@
  */
 import '@/assets/style.less';
 
-const requireComponent = require.context('../', true, /\.boot\.ts$/);
+const requireComponent = require.context('@/plugins/', true, /\.boot\.ts$/);
 
 requireComponent.keys().forEach(fileName => {
   requireComponent(fileName);

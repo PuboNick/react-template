@@ -1,7 +1,6 @@
-import bootstrap from '../bootstrap';
+import { setGlobalLoading } from '.';
+import bootstrap from '@/system/bootstrap';
 
 bootstrap.on('mount', async () => {
-  const loadingNode = document.getElementById('loading');
-  if (!loadingNode) return;
-  loadingNode.style.display = 'none';
+  setGlobalLoading(false);
 });

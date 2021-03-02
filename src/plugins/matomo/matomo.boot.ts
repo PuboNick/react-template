@@ -1,5 +1,5 @@
-import bootstrap from '../bootstrap';
-import constants from '../constants';
+import bootstrap from '../../system/bootstrap';
+import constants from '../../system/constants';
 
 interface PageType {
   path: string;

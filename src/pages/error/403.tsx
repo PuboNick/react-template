@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Result, Button } from 'antd';
-import bootstrap from '@/plugins/bootstrap';
+import bootstrap from '@/system/bootstrap';
 
 const ErrorPage403 = () => {
   return (

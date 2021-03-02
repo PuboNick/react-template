@@ -1,10 +1,10 @@
 import { message } from 'antd';
 import qs from 'querystring';
 
-import constants from '../constants';
-import { jsonParser, random } from '../utils';
-import bootstrap from '@/plugins/bootstrap';
-import { sleep } from '../utils/index';
+import constants from '../../system/constants';
+import { jsonParser, random } from '../../system/utils';
+import bootstrap from '@/system/bootstrap';
+import { sleep } from '../../system/utils/index';
 
 const client_id = constants.AUTH.clientId;
 const path = constants.AUTH.provider;

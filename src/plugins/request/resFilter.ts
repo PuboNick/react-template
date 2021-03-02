@@ -17,20 +17,9 @@
  * @member traceId 請求ID
  * @member host 主機IP地址
  */
-import bootstrap from '../bootstrap';
-import constants from '../constants';
+import bootstrap from '../../system/bootstrap';
 import { filter, ErrorInfoStructure } from '.';
 
-/**
- * 打印日誌
- * @param {any} message 內容
- */
-filter.response((response: ErrorInfoStructure) => {
-  if (!response.success && constants.IS_DEV) {
-    console.log(response);
-  }
-  return response;
-});
 /**
  * 返回 401 時，重新登陸
  */
@@ -38,4 +27,13 @@ filter.response((response: ErrorInfoStructure) => {
   const { errorCode } = response;
   if (errorCode === '401') bootstrap.handle('401');
   return response;
+});
+
+/**
+ * 異常攔截
+ */
+filter.response((response: ErrorInfoStructure) => {
+  console.log(response);
+  if (response.success) return response;
+  return Promise.reject(response);
 });

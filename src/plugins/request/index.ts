@@ -1,8 +1,8 @@
 import axios, { AxiosResponse, AxiosError, AxiosRequestConfig } from 'axios';
 
-import constants from '../constants';
-import { jsonParser } from '../utils';
-import { blob2text, downloadFile } from '../utils/file';
+import constants from '../../system/constants';
+import { jsonParser } from '../../system/utils';
+import { blob2text, downloadFile } from '../../system/utils/file';
 
 /**
  * 全局HTTP返回

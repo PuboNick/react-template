@@ -1,7 +1,7 @@
 import { userWorker } from 'umi';
-import bootstrap from './plugins/bootstrap';
+import bootstrap from './system/bootstrap';
 
-import '@/plugins/bootstrap/register';
+import '@/system/bootstrap/register';
 
 export async function getInitialState() {
   await bootstrap.handle('init');

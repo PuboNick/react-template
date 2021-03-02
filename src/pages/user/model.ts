@@ -2,7 +2,7 @@ import { Effect } from './../../.umi/plugin-dva/connect';
 import { Reducer, Subscription } from 'umi';
 import { createWorkerFactory } from '@shopify/web-worker';
 
-import bootstrap from '@/plugins/bootstrap';
+import bootstrap from '@/system/bootstrap';
 
 export interface UserAccessModelState {
   access: any;

@@ -1,6 +1,6 @@
 import { message } from 'antd';
 
-import constants from '@/plugins/constants';
+import constants from '@/system/constants';
 import userApi from './userApi';
 
 // 系统菜单列表
