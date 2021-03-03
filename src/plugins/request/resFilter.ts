@@ -28,12 +28,3 @@ filter.response((response: ErrorInfoStructure) => {
   if (errorCode === '401') bootstrap.handle('401');
   return response;
 });
-
-/**
- * 異常攔截
- */
-filter.response((response: ErrorInfoStructure) => {
-  console.log(response);
-  if (response.success) return response;
-  return Promise.reject(response);
-});

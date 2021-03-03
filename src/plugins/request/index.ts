@@ -29,32 +29,6 @@ export interface ErrorInfoStructure {
   host?: string;
 }
 
-type RequestFactory = (
-  params?: any,
-  data?: any,
-  config?: any,
-) => Promise<ErrorInfoStructure>;
-
-/**
- * download 是否自動下載文件
- * withoutToken 是否自動刪除 access_token
- */
-interface CreateApiFactoryConfig extends AxiosRequestConfig {
-  withoutToken?: boolean;
-  download?: {
-    auto: boolean;
-    fileName?: string;
-  };
-}
-
-type Config<T> = {
-  [key in keyof T]: CreateApiFactoryConfig;
-};
-
-type Factory<T> = {
-  [key in keyof T]: RequestFactory;
-};
-
 /**
  * 判斷是否添加了自動下載
  * @param config axios配置
@@ -213,22 +187,3 @@ export function initAxios() {
 export function setHeader(name: string, content: string) {
   axios.defaults.headers.common[name] = content;
 }
-
-/**
- * 創建api工廠方法
- * @param options AxiosRequestConfig
- */
-export const createApiFactory = <T extends Object>(
-  apis: Config<T>,
-): Factory<T> => {
-  const factory: any = {};
-  for (const key in apis) {
-    const options = apis[key];
-    factory[key] = (params?: any, data?: any, config?: any): RequestFactory => {
-      const opt = { ...options, params, data, ...config };
-      const results: any = axios(opt);
-      return results;
-    };
-  }
-  return factory;
-};

@@ -9,7 +9,6 @@ let chunksTemp: string[] = [
   'moment',
   'antd',
   '@umijs',
-  '@shopify',
   'core-js',
   '@ant-design',
 ];

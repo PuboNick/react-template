@@ -1,7 +1,6 @@
-import { message } from 'antd';
-
 import constants from '@/system/constants';
 import userApi from './userApi';
+import { createService } from '@/system/factory/service';
 
 // 系统菜单列表
 let AppMenuList: any = [];
@@ -10,31 +9,31 @@ let AppMenuList: any = [];
  * 獲取系統菜單
  * @param userId 登錄工號
  */
-const getMenuList = async (userId: string): Promise<any[]> => {
+const getMenuList = createService(async (userId: string) => {
   const body = { authorityData: constants.SYSTEM_ID, userId };
-  let { data, success } = await userApi.queryIsExistAuthority({}, body);
-  if (!success || !data) return [];
+  let data = await userApi.queryIsExistAuthority({}, body);
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
   let { childMenu } = menuList[0];
-  if (!Array.isArray(childMenu)) return [];
+  if (!Array.isArray(childMenu)) throw '獲取菜單失敗，數據不合法！';
   AppMenuList = [...childMenu];
   return childMenu;
-};
+})
+  .setInitialValues([])
+  .make();
 
 /**
  * 獲取系統廠區
  * @param userId 登錄工號
  */
-const getFactoryList = async (userId: string): Promise<any[]> => {
+const getFactoryList = createService(async (userId: string) => {
   const body = { authorityData: constants.SYSTEM_ID, userId };
-  let { data, success } = await userApi.queryAuthorityOrganization({}, body);
-  if (!success || !data) return [];
+  let data = await userApi.queryAuthorityOrganization({}, body);
   let { isAuthority, menuList } = data;
   if (!isAuthority || !menuList || menuList.length < 1) return [];
   let { userRelation } = menuList[0] || [];
   return userRelation;
-};
+}).make();
 
 /**
  * 獲取權限信息
@@ -90,12 +89,8 @@ export const getAccessByPathName = (pathName: string) => {
 /**
  * 獲取用戶信息
  */
-export const getUser = async () => {
-  const { success, data, errorMessage } = await userApi.getUserInfo();
-  if (!success) {
-    message.error(errorMessage);
-    return {};
-  }
+export const getUser = createService(async () => {
+  const data = await userApi.getUserInfo();
   const { sub, preferred_username } = data;
   return { name: preferred_username, empNo: sub };
-};
+}).make();

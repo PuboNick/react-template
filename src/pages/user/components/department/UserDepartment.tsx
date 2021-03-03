@@ -15,6 +15,8 @@ const UserDepartment = () => {
     let res = deptList.find((item: any) => item.name === value);
     dispatch({ type: 'userAccess/save', payload: { deptNo: res.name } });
   };
+  if (deptList.length < 2) return null;
+
   return (
     <Select
       value={userAccess.deptNo}

@@ -1,6 +1,6 @@
-import { createApiFactory } from '@/plugins/request';
+import { createApiFactory } from '@/system/factory/api';
 
-const userBaseUri = 'http://10.244.231.135:8080/tools/auth';
+const userBaseUri = 'http://10.244.231.135:8080/tools/auth/';
 const aimBaseUri = '/iam/Common/';
 
 export default createApiFactory({
@@ -15,7 +15,7 @@ export default createApiFactory({
     withoutToken: true,
   },
   getUserInfo: {
-    url: `${userBaseUri}/getUserInfo`,
+    url: `${userBaseUri}getUserInfo`,
     method: 'GET',
   },
 });

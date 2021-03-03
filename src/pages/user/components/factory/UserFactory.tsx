@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useModel, UserAccessModelState, useSelector } from 'umi';
 import { Select } from 'antd';
 
@@ -35,6 +35,9 @@ const UserFactory = () => {
       payload: { factory, deptList, deptNo },
     });
   }, []);
+
+  if (factoryList.length < 2) return null;
+
   return (
     <Select
       value={userAccess.factory}

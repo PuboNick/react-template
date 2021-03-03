@@ -1,8 +1,8 @@
 import { Effect } from './../../.umi/plugin-dva/connect';
 import { Reducer, Subscription } from 'umi';
-import { createWorkerFactory } from '@shopify/web-worker';
 
 import bootstrap from '@/system/bootstrap';
+import { getAccessByPathName } from './userService';
 
 export interface UserAccessModelState {
   access: any;
@@ -24,8 +24,6 @@ export interface UserAccessModelType {
   subscriptions: { setup: Subscription };
 }
 
-export const userWorker = createWorkerFactory(() => import('./userService'))();
-
 const UserAccessModel: UserAccessModelType = {
   namespace: 'userAccess',
   state: {
@@ -38,7 +36,7 @@ const UserAccessModel: UserAccessModelType = {
   effects: {
     *setAccess({ payload }, { put, call }) {
       const { access, childMenu } = yield call(
-        userWorker.getAccessByPathName,
+        getAccessByPathName,
         payload.pathname,
       );
       yield put({ type: 'save', payload: { access, childMenu } });
