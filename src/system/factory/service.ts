@@ -5,7 +5,7 @@ type Func = (...args: any) => any;
 class Service {
   initialValue: any;
   run: Func;
-  handelError: Func | null = function(err: any) {
+  handleError: Func | null = function(err: any) {
     if (typeof err === 'string') {
       message.error(err);
     } else {
@@ -19,22 +19,22 @@ class Service {
     this.run = func;
   }
 
-  setErrorHandler(func: Func) {
-    this.handelError = func;
+  public setErrorHandler(func: Func) {
+    this.handleError = func;
     return this;
   }
 
-  setStart(func: Func | null) {
+  public setStart(func: Func | null) {
     this.onStart = func;
     return this;
   }
 
-  setEnd(func: Func | null) {
+  public setEnd(func: Func | null) {
     this.onEnd = func;
     return this;
   }
 
-  setInitialValues(values: any) {
+  public setInitialValues(values: any) {
     this.initialValue = values;
     return this;
   }
@@ -52,12 +52,12 @@ class Service {
   }
 
   private async handel(err: any) {
-    if (typeof this.handelError === 'function') {
-      await this.handelError(err);
+    if (typeof this.handleError === 'function') {
+      await this.handleError(err);
     }
   }
 
-  make() {
+  public make() {
     return async (...args: any) => {
       try {
         await this.start();
@@ -65,7 +65,7 @@ class Service {
         await this.end();
         return result;
       } catch (err) {
-        this.handel(err);
+        await this.handel(err);
         await this.end();
         return this.initialValue;
       }
